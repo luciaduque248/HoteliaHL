@@ -8,9 +8,32 @@ import '../Admin/Edit.css'
 
 function EditModal({ habitacion, close }) {
     const handleEdit = async (e) => {
+
+        let data = new FormData();
+        data.append('_id', room._id)
+        data.append('nombrehab', room.nombrehab)
+        data.append('capacidad', room.capacidad)
+        data.append('camas', room.camas)
+        data.append('descripcion', room.descripcion)
+        data.append('wifi', room.wifi)
+        data.append('tv', room.tv)    
+        data.append('banio', room.banio)
+        data.append('cajafuerte', room.cajafuerte)
+        data.append('nevera', room.nevera)
+        data.append('valornoche', room.valornoche)
+        data.append('estado', room.estado)
+        data.append('img', room.img)
+        data.append('__v', room.__v)
+        data.append('reservas', room.reservas)
+
+        let config = {
+            header : {
+              'Content-Type' : 'multipart/form-data'
+            }
+          }
         // e.preventDefault()
         console.log(`${api}${habitacion._id}`)
-        const response = await axios.put(`${api}${habitacion._id}`, room);//await espera hasta que se ejcute la petición
+        const response = await axios.put(`${api}${habitacion._id}`, data, config);//await espera hasta que se ejcute la petición
         console.log(response);
         if (response.status === 200) {
             Swal.fire(
@@ -35,7 +58,12 @@ function EditModal({ habitacion, close }) {
     const [room, setRoom] = useState(habitacion)
 
     const handleValues = (event) => {
-        setRoom({ ...room, [event.target.name]: event.target.value })
+        if(event.target.files){
+            console.log(event.target.files)
+            setRoom({ ...room, [event.target.name]: event.target.files[0] })
+        }else{
+            setRoom({ ...room, [event.target.name]: event.target.value })
+        }
     }
 
     return (
@@ -100,7 +128,7 @@ function EditModal({ habitacion, close }) {
 
                                 <div className='lines-hz-edit'>
                                     <div className='each-option-vertical'>
-                                        <label>Descripción:</label>
+                                        <label>Descripción</label>
                                         <textarea value={room.descripcion} onChange={handleValues} id="descripcion" name="descripcion" rows="5"  className='' />
                                     </div>
                                 </div>
@@ -109,7 +137,7 @@ function EditModal({ habitacion, close }) {
 
                             <div className='info2'>
                                 <div className='each-option-vertical ' >
-                                    <label>Fotos:</label>
+                                    <label>Foto</label>
                                     <div className=''>
                                         <input
                                             filename={room.img}
@@ -121,7 +149,7 @@ function EditModal({ habitacion, close }) {
                                 </div>
 
                                 <div className='each-option-vertical'>
-                                    <label>Estado:</label>
+                                    <label>Estado</label>
                                     <select name="estado" className=''>
                                         <option value={habitacion.estado} selected={habitacion.estado === "Disponible" ? true : false} className='estado-form-yes'>DISPONIBLE</option>
                                         <option value={habitacion.estado} selected={habitacion.estado === "No disponible" ? true : false} className='estado-form-no'>NO DISPONIBLE</option>
@@ -148,7 +176,7 @@ function EditModal({ habitacion, close }) {
                                                             id='cajafuerte'
                                                             type="radio"
                                                             checked={room.cajafuerte === "si" ? true : false}
-                                                            onChange={handleValues} />
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'cajafuerte',value: "si"}})} />
                                                         <label>Si</label>
                                                     </div>
 
@@ -159,7 +187,7 @@ function EditModal({ habitacion, close }) {
                                                             id='cajafuerte'
                                                             type="radio"
                                                             checked={room.cajafuerte === "no" ? true : false}
-                                                            onChange={handleValues} />
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'cajafuerte',value: "no"}})} />
                                                         <label >No</label>
                                                     </div>
                                                 </div>
@@ -176,7 +204,7 @@ function EditModal({ habitacion, close }) {
                                                             name='wifi'
                                                             id='wifi'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'wifi',value: "si"}})}
                                                             checked={room.wifi === "si" ? true : false} />
                                                         <label>Si</label>
                                                     </div>
@@ -186,7 +214,7 @@ function EditModal({ habitacion, close }) {
                                                             name='wifi'
                                                             id='wifi'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'wifi',value: "no"}})}
                                                             checked={room.wifi === "no" ? true : false} />
                                                         <label>No</label>
                                                     </div>
@@ -208,7 +236,7 @@ function EditModal({ habitacion, close }) {
                                                             name='nevera'
                                                             id='nevera'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'nevera',value: "si"}})}
                                                             checked={room.nevera === "si" ? true : false} />
                                                         <label>Si</label>
                                                     </div>
@@ -218,7 +246,7 @@ function EditModal({ habitacion, close }) {
                                                             name='nevera'
                                                             id='nevera'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'nevera',value: "no"}})}
                                                             checked={room.nevera === "no" ? true : false} />
                                                         <label >No</label>
                                                     </div>
@@ -236,7 +264,7 @@ function EditModal({ habitacion, close }) {
                                                             name='tv'
                                                             id='tv'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'tv',value: "si"}})}
                                                             checked={room.tv === "si" ? true : false} />
                                                         <label>Si</label>
                                                     </div>
@@ -246,7 +274,7 @@ function EditModal({ habitacion, close }) {
                                                             name='tv'
                                                             id='tv'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'tv',value: "no"}})}
                                                             checked={room.tv === "no" ? true : false} />
                                                         <label >No</label>
                                                     </div>
@@ -266,7 +294,7 @@ function EditModal({ habitacion, close }) {
                                                             name='banio'
                                                             id='banio'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'banio',value: "si"}})}
                                                             checked={room.banio === "si" ? true : false} />
                                                         <label>Si</label>
                                                     </div>
@@ -276,7 +304,7 @@ function EditModal({ habitacion, close }) {
                                                             name='banio'
                                                             id='banio'
                                                             type="radio"
-                                                            onChange={handleValues}
+                                                            onChange={(e)=>handleValues({...e, target:{name: 'banio',value: "no"}})}
                                                             checked={room.banio === "no" ? true : false} />
                                                         <label >No</label>
                                                     </div>

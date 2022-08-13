@@ -28,8 +28,10 @@ function ListHabs() {
     }
 
     useEffect(() => {
-        peticionGet();
-    }, [])
+        if(!modal){
+            peticionGet();
+        }
+    }, [modal])
 
     const handleChange = e => {
         // console.log(e.target.value)
@@ -37,15 +39,11 @@ function ListHabs() {
         filtrar(e.target.value);
     }
 
-    const filtrar=(terminoBusqueda)=>{
-        let resultadosBusqueda = habitaciones.filter((habitacion)=>{
-          if(habitacion._id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-          || habitacion.nombrehab.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-          ){
-            return habitacion;
-          }
-        });
-        setHabitaciones(resultadosBusqueda);
+    const filtrar=()=>{
+        let resultadosBusqueda = habitaciones.filter((habitacion)=> habitacion._id.toString().toLowerCase().includes(busqueda.toLowerCase())
+          || habitacion.nombrehab.toString().toLowerCase().includes(busqueda.toLowerCase())
+          );
+        return resultadosBusqueda
       }
 
     useEffect(() => {
@@ -56,6 +54,10 @@ function ListHabs() {
             })
 
     }, [modal])
+
+    // useEffect(() => {
+    //     filtrar(busqueda)
+    // }, [busqueda])
 
     // const handleSelect = async(room, selectedStatus) =>{
     //     const response = await axios.put(`${api}${room._id}`, {...room, estado: selectedStatus});
@@ -70,14 +72,14 @@ function ListHabs() {
                 <h1>HABITACIONES</h1>
 
                 <div className='busqueda-rooms'>
-                    <input className='inputBuscar' value={busqueda} placeholder={'Que habitación desea buscar?'} onChange={handleChange} />
+                    <input className='inputBuscar' placeholder={'Que habitación desea buscar?'} onChange={(e)=>setBusqueda(e.target.value)} />
                     {/* <button><i className="fa-solid fa-magnifying-glass"></i></button> */}
                 </div>
 
                 <div className='cards-list-habitaciones'>
                     {habitaciones &&
-                        habitaciones?.map(habitacion => (
-                            <div className='list-cards-vertical'>
+                        filtrar().map(habitacion => (
+                            <div className='list-cards-vertical' key={habitacion._id}>
                                 <div className='info-image-card'>
                                     <div className='cards-horizontal' key={habitacion._id}>
                                         <div className='description-room'>
@@ -99,29 +101,29 @@ function ListHabs() {
                                                     </div>
                                                     <div className='each-thing'>
                                                         <i className="fa-solid fa-vault"></i>
-                                                        <p>{habitacion.cajafuerte ? "Si" : "No"}</p>
+                                                        <p>{habitacion.cajafuerte === 'si' ? "Si" : "No"}</p>
                                                     </div>
                                                 </div>
 
                                                 <div className="lines rs-320px">
                                                     <div className='each-thing'>
                                                         <i className="fa-solid fa-tv"></i>
-                                                        <p>{habitacion.tv ? "Si" : "No"}</p>
+                                                        <p>{habitacion.tv === 'si' ? "Si" : "No"}</p>
                                                     </div>
                                                     <div className='each-thing'>
                                                         <i className="fa-solid fa-wifi"></i>
-                                                        <p>{habitacion.wifi ? "Si" : "No"}</p>
+                                                        <p>{habitacion.wifi === 'si' ? "Si" : "No"}</p>
                                                     </div>
                                                 </div>
 
                                                 <div className="lines rs-320px">
                                                     <div className='each-thing'>
                                                         <img src={Nevera} alt='nevera' />
-                                                        <p>{habitacion.nevera ? "Si" : "No"}</p>
+                                                        <p>{habitacion.nevera === 'si' ? "Si" : "No"}</p>
                                                     </div>
                                                     <div className='each-thing'>
                                                         <i className="fa-solid fa-bath"></i>
-                                                        <p>{habitacion.banio ? "Si" : "No"}</p>
+                                                        <p>{habitacion.banio === 'si' ? "Si" : "No"}</p>
                                                     </div>
                                                 </div>
 

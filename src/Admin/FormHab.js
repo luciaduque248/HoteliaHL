@@ -19,7 +19,7 @@ const FormHab = () => {
         camas: "",
         descripcion: "",
         img: "",
-        safeselection: false,
+        cajafuerte: false,
         tv: false,
         wifi: false,
         nevera: false,
@@ -28,6 +28,9 @@ const FormHab = () => {
     })
     /*2. Se usa la función handleChange para que cada vez que haya un cambio en el input
     guarde el name y el value del mismo */
+    
+
+
     const handleChange = ({ target }) => {
         console.log(target.value)
         
@@ -45,8 +48,31 @@ const FormHab = () => {
 
     /*3. funcion para procesar el envío del formulario*/
     const handleSubmit = async (e) => {
+        let data = new FormData();
+        data.append('_id', data._id)
+        data.append('nombrehab', data.nombrehab)
+        data.append('capacidad', data.capacidad)
+        data.append('camas', data.camas)
+        data.append('descripcion', data.descripcion)
+        data.append('wifi', data.wifi)
+        data.append('tv', data.tv)    
+        data.append('banio', data.banio)
+        data.append('cajafuerte', data.cajafuerte)
+        data.append('nevera', data.nevera)
+        data.append('valornoche', data.valornoche)
+        data.append('estado', data.estado)
+        data.append('img', data.img)
+        data.append('__v', data.__v)
+        data.append('reservas', data.reservas)
+
+        let config = {
+            header : {
+              'Content-Type' : 'multipart/form-data'
+            }
+          }
+
         e.preventDefault();
-        const response = await axios.post(url, data);//await espera hasta que se ejcute la petición
+        const response = await axios.post(url, data, config);//await espera hasta que se ejcute la petición
         //console.log(response);
         if (response.status === 200) {
             Swal.fire(
@@ -78,7 +104,7 @@ const FormHab = () => {
 
                     <div className='line1-habitacion'>
                         <div className='flex-form' id='grupo__nohab'>
-                            <label className='formulario__label'>No. de Hab:</label>
+                            <label className='formulario__label'>No. de Hab</label>
                             
                             <input 
                                 className='no-hab' 
@@ -92,7 +118,7 @@ const FormHab = () => {
                         </div>
 
                         <div className='flex-form nombrehab'>
-                            <label className='formulario__label'>Nombre de Habitación:</label>
+                            <label className='formulario__label'>Nombre de Habitación</label>
                             <input 
                                 placeholder="Ej: President's Suite"
                                 className='no-hab' 
@@ -107,15 +133,15 @@ const FormHab = () => {
 
                     <div className='line2-habitacion'>
                         <div className='select-estado-form flex-form'>
-                            <label className='formulario__label estado-label'>Estado:</label>
-                            <select name="estado"  className='estado-form'>
+                            <label className='formulario__label estado-label'>Estado</label>
+                            <select name="estado"  className='estado-form' onChange={handleChange}>
                                 <option value={data.estado} className='estado-form-yes'>DISPONIBLE</option>
                                 <option value={data.estado} className='estado-form-no'selected>NO DISPONIBLE</option>
                                 <option value={data.estado} className='estado-form-upkeep'>EN MANTENIMIENTO</option>
                             </select>
                         </div>
                         <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>Capacidad de Personas:</label>
+                            <label className='formulario__label'>Capacidad de Personas</label>
                             <input 
                                 type='number' 
                                 name='capacidad' 
@@ -124,7 +150,7 @@ const FormHab = () => {
                                 />
                         </div>
                         <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>Precio:</label>
+                            <label className='formulario__label'>Precio</label>
                             <input 
                                 placeholder="Ej: 000000"
                                 className='precio-form' 
@@ -135,7 +161,7 @@ const FormHab = () => {
                                 />
                         </div>
                         <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>No. de Camas:</label>
+                            <label className='formulario__label'>No. de Camas</label>
                             <input 
                                 className='camas-input-form'
                                 type='number' 
@@ -149,7 +175,7 @@ const FormHab = () => {
 
                     <div className='line3-habitacion'>
                         <div className='flex-form'>
-                            <label className='formulario__label'>Descripción:</label>
+                            <label className='formulario__label'>Descripción</label>
                             <textarea
                                 value={data.descripcion}
                                 onChange={handleChange} 
@@ -165,7 +191,7 @@ const FormHab = () => {
 
                     <div className='line4-habitacion'>
                         <div className='flex-form  file-select-form'>
-                            <label>Fotos:</label>
+                            <label>Fotos</label>
                             <div className='flex-select-form'>
                                 <input 
                                     name='img'
@@ -182,7 +208,7 @@ const FormHab = () => {
                     </div>
                     <div className='line5-habitacion'>
                         <div className='flex-form'>
-                            <h3>Observaciones adicionales:</h3>
+                            <h3>Observaciones adicionales</h3>
 
                             <div className='flex-si-no'>
                                 <div className='lines-form'>
@@ -196,7 +222,7 @@ const FormHab = () => {
                                         <div className='selectors-radio'>
                                             <input 
                                                 type="radio" 
-                                                name="safeselection" 
+                                                name="cajafuerte" 
                                                 onChange={handleChange} 
                                                 value={"Si"}
                                                 />
@@ -206,7 +232,7 @@ const FormHab = () => {
                                         <div className='selectors-radio'>
                                             <input 
                                                 type="radio" 
-                                                name="safeselection"
+                                                name="cajafuerte"
                                                 onChange={handleChange}
                                                 value={"No"}
                                                 />
