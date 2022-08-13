@@ -1,0 +1,520 @@
+:root{
+    --verde-botones: #157A8A;
+    --negro: #333333;
+}
+
+.nav-bar-list{
+    background-color: var(--negro);
+    height: 10vh;
+    color: white;
+}
+
+.container-list-habs h1{
+    text-align: center;
+    color: var(--negro);
+    padding-top: 2rem;
+    font-weight: 200;
+    font-family: 'Akrobat';
+}
+
+/* :::::::::::::::::::: BUSQUEDA :::::::::::::::::::: */
+.busqueda-rooms{
+    padding: 0 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.inputBuscar{
+    border: 1px solid #333333;
+    border-radius: 50px;
+    width: 80vw;
+    font-family: 'Akrobat';
+    font-size: 15px;
+    padding: 1rem 4rem;
+    background-image: url(https://cdn4.iconfinder.com/data/icons/basic-user-interface-elements/700/search-zoom-fit-256.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    background-position: 2% center;
+}
+
+/* :::::::::::::::::::::::::::::::::::::::::::::::::: */
+
+.list-cards-vertical{
+    /* background-color: blue; */
+    padding: 1rem 3rem;
+}
+
+.info-image-card{
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 1rem;
+}
+
+.cards-horizontal{
+    background-color: white;
+    background-image: url('../img/Vector\ 9.png');
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+
+    width: 55vw;
+    height: 45vh;
+    box-shadow: 2px 2px 10px grey;
+    padding: 1.5rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-room img{
+    border-radius: 5px;
+    object-fit: cover;
+    object-position: center;
+    box-shadow: 1px 1px 5px grey;
+    width: 30vw;
+    height: 50vh;
+}
+
+.info-list{
+    /* background-color: red; */
+    padding: 0 1.5rem;
+    width: 30vw;
+    height: 35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-list h1{
+    padding: 0;
+    font-weight: bold;
+}
+
+.info-list p{
+    text-align: justify;
+    font-family: 'Biko';
+    color: var(--negro);
+    line-height: 30px;
+}
+
+.info-list h2{
+    text-align: right;
+    font-family: 'Akrobat';
+    font-size: 30px;
+}
+
+.price-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Akrobat';
+}
+
+.price-list h1{
+    font-weight: bold;
+    padding: 0;
+}
+
+.price-list p{
+    font-family: 'Akrobat';
+    font-size: 25px;
+}
+
+.details{
+    /* background-color: #157A8A; */
+    width: 22vw;
+    height: 30vh;
+    font-size: 22px;
+    color: var(--negro);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lines{
+    display: flex;
+    margin: 1rem 0;
+    font-family: 'Biko';
+}
+
+.each-thing{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+}
+
+.each-thing img{
+    width: 55%;
+}
+
+.each-thing i{
+    margin: 0 10px;
+}
+
+.edit-rooms{
+    margin-top: 1rem;
+    background-color: var(--negro);
+    color: white;
+    padding: 8px 2rem;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Akrobat';
+    font-weight: bold;
+    font-size: 20px;
+    width: 20vw;
+}
+
+.description-room{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .busqueda-rooms{
+        padding: 0 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .inputBuscar{
+        width: 45vw;
+        padding: 1rem 3.5rem;
+        background-position: 8% center;
+    }
+    
+    .list-cards-vertical{
+        /* background-color: blue; */
+        padding: 1rem 1rem;
+    }
+    
+    .info-image-card{
+        flex-direction: column;
+        width: 80vw;
+    } 
+
+    .cards-horizontal{
+        padding: 0 0;
+        width: 80vw;
+        flex-direction: column;
+        height: 140vh;
+    }
+
+    .description-room{
+        flex-direction: column;
+    }
+
+    .info-list{
+        /* background-color: aqua; */
+        padding: 0rem 0;
+        height: 80vh;
+        width: 65vw;
+        justify-content: space-around;
+    }
+
+    .details{
+        /* background-color: red; */
+        width: 75vw;
+        height: 50vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .price-list{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .price-list p{
+        font-size: 20px;
+        margin: 15px 0;
+    }
+
+    .image-room img{
+        width: 80vw;
+        height: 30vh;
+        margin: 1rem 0;
+    }
+
+    .lines{
+        margin: 5px 0;
+        flex-direction: column;
+    }
+
+    .each-thing{
+        margin: 10px 0;
+    }
+
+    .edit-rooms{
+        width: fit-content;
+    }
+
+    .rs-320px{
+        display: flex;
+        flex-direction: row;
+    }
+
+}
+
+@media (min-width: 481px) and (max-width: 568px) {
+    .busqueda-rooms{
+        padding: 0 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .inputBuscar{
+        width: 65vw;
+        padding: 1rem 4rem;
+        background-position: 5% center;
+    }
+    
+    .list-cards-vertical{
+        /* background-color: blue; */
+        padding: 1rem 1rem;
+    }
+    
+    .info-image-card{
+        flex-direction: column;
+        width: 80vw;
+    } 
+
+    .cards-horizontal{
+        padding: 0 0;
+        width: 80vw;
+        flex-direction: column;
+        height: 140vh;
+    }
+
+    .description-room{
+        flex-direction: column;
+    }
+
+    .info-list{
+        /* background-color: aqua; */
+        padding: 0rem 0;
+        height: 80vh;
+        width: 65vw;
+        justify-content: space-around;
+    }
+
+    .details{
+        /* background-color: red; */
+        width: 75vw;
+        height: 50vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .price-list{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .price-list p{
+        font-size: 20px;
+        margin: 15px 0;
+    }
+
+    .image-room img{
+        width: 80vw;
+        height: 30vh;
+        margin: 1rem 0;
+    }
+
+    .lines{
+        margin: 5px 0;
+        flex-direction: column;
+    }
+
+    .each-thing{
+        margin: 10px 0;
+    }
+
+    .edit-rooms{
+        width: fit-content;
+    }
+
+    .rs-320px{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 569px) and (max-width: 767px) {
+    .busqueda-rooms{
+        padding: 0 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .inputBuscar{
+        width: 70vw;
+        padding: 1rem 4rem;
+        background-position: 5% center;
+    }
+
+    .list-cards-vertical{
+        padding: 1rem 1rem;
+    }
+
+    .info-image-card{
+        flex-direction: column;
+    }
+
+    .cards-horizontal{
+        width: 85vw;
+        height: 60vh;
+    }
+
+    .image-room img{
+        width: 85vw;
+        height: 42vh;
+        margin: 1rem 0;
+    }
+
+    .info-list{
+        /* background-color: aqua; */
+        padding: 0rem 0;
+        height: 60vh;
+        width: 45vw;
+        justify-content: space-around;
+    }
+
+    .details{
+        /* background-color: red; */
+        width: 35vw;
+        height: 60vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .lines{
+        margin: 5px 0;
+        flex-direction: column;
+    }
+    
+    .rs-320px{
+        display: flex;
+        flex-direction: row;
+    }
+    .each-thing{
+        margin: 10px 0;
+    }
+
+    .price-list{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .price-list p{
+        font-size: 20px;
+        margin: 5px 0;
+    }
+
+    .price-list h1{
+        font-weight: bold;
+        font-size: 25px;
+        padding: 0;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .busqueda-rooms{
+        padding: 0 2rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .inputBuscar{
+        width: 70vw;
+        padding: 1rem 4rem;
+        background-position: 5% center;
+    }
+
+    .list-cards-vertical{
+        padding: 1rem 1rem;
+    }
+
+    .description-room{
+        flex-direction: row;
+    }
+
+    .info-image-card{
+        flex-direction: row;
+    }
+
+    .cards-horizontal{
+        flex-direction: column;
+        width: 55vw;
+        height: 60vh;
+    }
+
+    .image-room img{
+        width: 30vw;
+        height: 42vh;
+        margin-left: 2rem;
+    }
+
+    .info-list{
+        /* background-color: aqua; */
+        padding: 1rem 1rem;
+        height: 60vh;
+        width: 25vw;
+        justify-content: space-around;
+    }
+
+    .details{
+        /* background-color: red; */
+        width: 25vw;
+        height: 45vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .lines{
+        margin: 5px 0;
+        flex-direction: row;
+    }
+    
+    .rs-320px{
+        display: flex;
+        flex-direction: row;
+    }
+    .each-thing{
+        margin: 10px 0;
+    }
+
+    .price-list{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .price-list p{
+        font-size: 20px;
+        margin: 5px 0;
+    }
+
+    .price-list h1{
+        font-weight: bold;
+        font-size: 25px;
+        padding: 0;
+    }
+}
+
+@media only screen and (min-device-width : 1024px) and (max-device-width :  1224px) {
+    .image-room img{
+        width: 30vw;
+        height: 52vh;
+        margin-left: 2rem;
+    }
+}
+
