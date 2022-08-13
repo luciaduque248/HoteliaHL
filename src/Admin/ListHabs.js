@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../utils/peticiones';
 import Nevera from '../assets/img/iconos/nevera.png'
 import Footer from '../components/Footer/Footer';
-import ModalEdit from '../Admin/Modal'
 
 import '../assets/css/ListHabs.css';
 import EditModal from './EditModal';

@@ -140,6 +140,7 @@ function EditModal({ habitacion, close }) {
                                     <label>Foto</label>
                                     <div className=''>
                                         <input
+                                        onChange={handleValues} 
                                             filename={room.img}
                                             name='img'
                                             id='img'

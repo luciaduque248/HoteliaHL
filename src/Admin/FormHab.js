@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import '../assets/css/FormHab.css'
 import Footer from '../components/Footer/Footer'
 import Nevera from '../assets/img/iconos/nevera.png'
-import Admin_NavBar from '../components/Dashboards/Admin_NavBar'
+// import Admin_NavBar from '../components/Dashboards/Admin_NavBar'
 
 const FormHab = () => {
     /*1.Inicializamos los inputs en el estado, para poder recibir los valores que se digiten 
@@ -28,7 +28,7 @@ const FormHab = () => {
     })
     /*2. Se usa la función handleChange para que cada vez que haya un cambio en el input
     guarde el name y el value del mismo */
-    
+
 
 
     const handleChange = ({ target }) => {
@@ -94,8 +94,8 @@ const FormHab = () => {
     
     return (
         <div>
-            <Admin_NavBar/>
-            {/* <div className='nav-bar-list'>Header</div> */}
+            {/* <Admin_NavBar/> */}
+            <div className='nav-bar-list'>Header</div>
 
             <div className='container-form-habs'>
                 <h1>CREAR HABITACIÓN</h1>
