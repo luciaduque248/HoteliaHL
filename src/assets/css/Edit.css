@@ -51,7 +51,7 @@
 }
 
 .closeModal button{
-    background-image: url(../assets/img/iconos/CERRAR.png);
+    background-image: url(../img/iconos/CERRAR.png);
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -115,7 +115,7 @@
 .info1 .each-option-vertical .price-edit{
     width: 8vw;
     padding-left: 2.5rem;
-    background-image: url(../assets/img/iconos/price.png);
+    background-image: url(../img/iconos/price.png);
     background-size: 30px 30px;
     background-repeat: no-repeat;
     background-position: 5% center;
