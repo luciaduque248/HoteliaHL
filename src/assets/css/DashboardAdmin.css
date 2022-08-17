@@ -1,0 +1,126 @@
+:root{
+    --verde-botones: #157A8A;
+    --dark: #333333;
+    --white: white;
+    --blue: #48D6ED;
+}
+
+
+.background-admin{
+    background-color:#555;
+}
+
+.border-admin{
+    border-top: 2px solid var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.btn-salir-dashboard-admin{
+    font-family:'Biko';
+    color: var(--white);
+    display: flex;
+    justify-content:flex-end;
+    padding: 2rem 1rem 0 0;
+}
+
+.group-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.group-item-admin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem 3rem;
+    padding: 0.5rem 1rem;
+    color: var(--white);
+}
+
+.group-item-admin:hover{
+    transform: scale(1.2);
+    transition: transform;
+    color: var(--blue);
+}
+
+.group-item-admin i{
+    margin-bottom:.5rem;
+    font-size: 32px;
+}
+
+.group-menu-admin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:'Akrobat';
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 0 1rem 0;
+}
+
+.group-welcome-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.imagotype{
+    padding: 2rem 0 0 1rem;
+
+}
+
+.photo-Dashboard-admin {
+    width: 8rem;
+}
+
+.welcome-title-admin {
+    font-family: 'Biko';
+    color: var(--blue);
+    text-align: center;
+    margin: 2rem 0 1rem 0;
+}
+
+@media screen and (min-width:768px) {
+
+    .border-admin{
+        border-top: 0px solid var(--white);
+        border-bottom: 0px solid var(--white);
+        border-right: 2px solid var(--white);
+        border-left: 2px solid var(--white);
+    }
+
+    .btn-salir-dashboard-admin{
+        padding: 1rem 2rem 0 0;
+    }
+
+    .btn-salir-dashboard-admin img{
+        position: relative;
+        top: 0.3rem;
+    }
+
+    .group-menu-admin{
+        flex-direction: row;
+        justify-content: center;
+        padding: 0 0 2rem 0;
+        margin-top: 2rem;
+        position: relative;
+        right: 1.5rem;
+    }
+
+    .imagotype{
+        padding: 1rem 0 0 2rem;
+    }
+
+    .photo-Dashboard-admin {
+        width: 12rem;
+        margin-top: .5rem;
+    }
+
+    .welcome-title-admin {
+        font-size: 24px;
+        margin-top: 2rem;
+
+    }
+}

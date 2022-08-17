@@ -6,6 +6,7 @@ import FormHab from '../Admin/FormHab'
 import ListHabs from '../Admin/ListHabs'
 import Inicio from '../pages/Inicio'
 import Login from '../pages/Login'
+import Perfil from '../Admin/Dashboard'
 
 function AppRoutes() {
   return (
