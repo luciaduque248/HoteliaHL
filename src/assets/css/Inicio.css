@@ -460,6 +460,122 @@ a{
 @media (min-width: 481px) and (max-width: 767px) {
     .section-banner{
         padding: 0;
+        height: 150vh;
+    }
+
+    .banner-inicio-1{
+        height: 40vh;
+        width: 100vw;
+    }
+
+    .banner-inicio-1 h1{
+        text-align: center;
+        margin-bottom: 4rem;
+        font-size: 38px;
+    }
+
+    .banner-inicio-1 h4{
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .fecha{
+        text-align: center;
+    }
+
+    .inputs input{
+        width: 40vw;
+    }
+
+    .inputs-habs{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .habs-flex .hab{
+        width: 30vw;
+        margin-left: -3rem;
+    }
+
+    .buscar-inicio form{
+        width: 50vw;
+        height: 70vh;
+        flex-direction: column;
+    }
+
+    .descubre-hotelia{
+        width: 50vw;
+        flex-direction: column;
+        height: 150vh;
+        padding: 4rem 5rem;
+    }
+
+    .descubre{
+        align-items: center;
+        padding: 0 0rem;
+    }
+
+    .descubre h1{
+        line-height: 50px;
+        text-align: center;
+    }
+
+    .descubre p{
+        width: 70vw;
+        text-align: center;
+    }
+    .descubre-galeria{
+        height: 35vh;
+        width: 60vw;
+        padding: 2rem 0rem;
+        margin: 0 -1rem;
+    }
+
+    .descubre-galeria img{
+        width: 72vw;
+    }
+
+    .experiencias{
+        height: 50vh;
+        padding: 0 1rem;
+    }
+
+    .text-experiencias{
+        margin-left: 1rem;
+        height: 40vh;
+        width: 90vw;
+        background-size: cover;
+    }
+
+    .text-exp-description{
+        font-size: 15px;
+        padding: 0 3rem;
+    }
+
+    .slide-expe{
+        margin-left: -1rem;
+        width: 70vw;
+    }
+
+    .ubicacion img{
+        width: 80vw;
+        margin: 2rem 1rem;
+    }
+
+    .line1-footer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .line1-footer p{
+        margin: 1rem 0;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    .section-banner{
+        padding: 0;
         height: 160vh;
     }
     .banner-inicio-1{
