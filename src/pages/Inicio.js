@@ -35,7 +35,7 @@ function Inicio() {
         <div className='habitaciones-precios' id='habitacion'>
             <h1>Habitaciones & Precios</h1>
 
-            <div className='container-cards-inicio'>
+            <div className='container-cards-inicio' id='habitaciones&precios' >
                 <CardSlide/>
             </div>
         </div> 

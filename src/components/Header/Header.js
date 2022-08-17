@@ -19,14 +19,14 @@ function Header() {
                 </div>
 
                 <div className='button-reserva'>
-                    <Link to=''><button>RESERVA</button></Link>
+                    <Link to='/login'><button>RESERVA</button></Link>
                 </div>
 
                 <ul className='navbar-ul'>
-                    <li><Link to="/Hotelia/" className=' link'>Inicio</Link></li>
-                    <li><Link to="" className=' link'>Habitaciones</Link></li>
+                    <li><Link to="/" className=' link'>Inicio</Link></li>
+                    <li><a href='#habitaciones&precios' className=' link'>Habitaciones</a></li>
                     <li><a href='#acerca-de-nosotros' className=' link'>Acerca de nosotros</a></li>
-                    <li><Link to="/Hotelia/login" className=' link login'>Registrarse / Iniciar sesión</Link></li>
+                    <li><Link to="/login" className=' link login'>Registrarse / Iniciar sesión</Link></li>
                 </ul>
             </nav>
         </div>
