@@ -152,9 +152,20 @@ function EditModal({ habitacion, close }) {
                                 <div className='each-option-vertical'>
                                     <label>Estado</label>
                                     <select name="estado" className=''>
-                                        <option value={habitacion.estado} selected={habitacion.estado === "Disponible" ? true : false} className='estado-form-yes'>DISPONIBLE</option>
-                                        <option value={habitacion.estado} selected={habitacion.estado === "No disponible" ? true : false} className='estado-form-no'>NO DISPONIBLE</option>
-                                        <option value={habitacion.estado} selected={habitacion.estado === "En mantenimiento" ? true : false} className='estado-form-upkeep'>EN MANTENIMIENTO</option>
+                                        <option 
+                                            value={habitacion.estado} 
+                                            selected={habitacion.estado === "Disponible" ? true : false} className='estado-form-yes'>DISPONIBLE
+                                        </option>
+                                        
+                                        <option 
+                                            value={habitacion.estado} 
+                                            selected={habitacion.estado === "No disponible" ? true : false}     className='estado-form-no'>NO DISPONIBLE
+                                        </option>
+                                        
+                                        <option 
+                                            value={habitacion.estado} 
+                                            selected={habitacion.estado === "En mantenimiento" ? true : false} className='estado-form-upkeep'>EN MANTENIMIENTO
+                                        </option>
                                     </select>
                                 </div>
                                 
