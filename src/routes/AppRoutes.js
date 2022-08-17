@@ -13,10 +13,10 @@ function AppRoutes() {
         <Routes>
             <Route path='/' element={<Inicio/>} ></Route>
 
-
-            <Route path='/Hotelia/list-habitaciones' element={<ListHabs/>} ></Route>
-            <Route path='/Hotelia/form-habitaciones' element={<FormHab/>} ></Route>
-            <Route path='/Hotelia/login' element={<Login/>} ></Route>
+            <Route path='/list-habitaciones' element={<ListHabs/>} ></Route>
+            <Route path='/form-habitaciones' element={<FormHab/>} ></Route>
+            <Route path='/login' element={<Login/>} ></Route>
+            <Route path='/perfil' element={<Perfil/>} ></Route>
 
         </Routes>
     </BrowserRouter>

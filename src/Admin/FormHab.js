@@ -83,8 +83,6 @@ const FormHab = () => {
                 `La habitación <strong> ${response.data.nombrehab}</strong> ha sido registrada exitosamente!`,
                 'success'
             )
-            // <Navigate to='/Hotelia/list-habitaciones'/>
-            // window.location('/Hotelia/list-habitaciones')
 
         } else {
             Swal.fire(

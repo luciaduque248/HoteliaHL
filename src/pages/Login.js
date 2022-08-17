@@ -21,7 +21,7 @@ const Login = () => {
                     let errores = {}
                     //VALIDACIÓN CORREO Y CONTRASEÑA DEL ADMIN
                     if (valores.email === 'admin@hotelia.com' && valores.contraseña === 'adminhl12') {
-                        window.location = "/Hotelia/list-habitaciones"
+                        window.location = "/list-habitaciones"
                     }if(valores.email === 'jfajardo@hotelia.com' && valores.contraseña === 'userhl12'){
                         window.location = "/Hotelia/"
                     }
