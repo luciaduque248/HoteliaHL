@@ -195,145 +195,145 @@ const FormHab = () => {
 
                     </div>
 
-                    <div className='line4-habitacion'>
-                        <div className='flex-form  file-select-form'>
-                            <label>Fotos</label>
-                            <div className='flex-select-form'>
-                                <input  
-                                    name='img'
-                                    required
-                                    onChange={handleChange} 
-                                    className='fotos-edit-form' 
-                                    type='file' />
+                    <div className='flex-fotos-observ'>
+                        <div className='line4-habitacion'>
+                            <div className='flex-form2  file-select-form'>
+                                <label>Fotos</label>
+                                <div className='flex-select-form'>
+                                    <input
+                                        name='img'
+                                        required
+                                        onChange={handleChange}
+                                        className='fotos-edit-form'
+                                        type='file' />
+                                </div>
                             </div>
-
-
                         </div>
 
-                    </div>
-                    <div className='line5-habitacion'>
-                        <div className='flex-form'>
-                            <h3>Observaciones adicionales</h3>
+                        <div className='line5-habitacion'>
+                            <div className='flex-form2'>
+                                <h3>Observaciones adicionales</h3>
 
-                            <div className='flex-si-no'>
-                                <div className='lines-form'>
+                                <div className='flex-si-no'>
+                                    <div className='lines-form'>
 
-                                    <div className='observ-form'>
-                                        <div className='cajafuerte'>
-                                            <i className="fa-solid fa-vault"></i>
-                                            <p>Caja fuerte</p>
-                                        </div>
+                                        <div className='observ-form'>
+                                            <div className='cajafuerte'>
+                                                <i className="fa-solid fa-vault"></i>
+                                                <p>Caja fuerte</p>
+                                            </div>
 
-                                        <div className='selectors-radio'>
-                                            <input  
-                                                type="radio" 
-                                                name="cajafuerte" 
-                                                onChange={handleChange} 
-                                                value={"Si"}
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name="cajafuerte"
+                                                    onChange={handleChange}
+                                                    value={"Si"}
                                                 />
-                                            <label className='formulario__label'>Si</label>
-                                        </div>
+                                                <label className='formulario__label'>Si</label>
+                                            </div>
 
-                                        <div className='selectors-radio'>
-                                            <input  
-                                                type="radio" 
-                                                name="cajafuerte"
-                                                onChange={handleChange}
-                                                value={"No"}
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name="cajafuerte"
+                                                    onChange={handleChange}
+                                                    value={"No"}
                                                 />
-                                            <label className='formulario__label'>No</label>
+                                                <label className='formulario__label'>No</label>
+                                            </div>
+                                        </div>
+
+                                        <div className='observ-form'>
+                                            <p className='wifi'><i className="fa-solid fa-wifi"></i>WI-FI</p>
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='wifi'
+                                                    onChange={handleChange}
+                                                    value={"Si"} />
+                                                <label className='formulario__label'>Si</label>
+                                            </div>
+
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='wifi'
+                                                    onChange={handleChange}
+                                                    value={"No"} />
+                                                <label className='formulario__label'>No</label>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className='observ-form'>
-                                        <p><i className="fa-solid fa-wifi"></i>WI-FI</p>
-                                        <div className='selectors-radio'>
-                                            <input   
-                                                type="radio"
-                                                name='wifi'
-                                                onChange={handleChange}
-                                                value={"Si"}/>
-                                            <label className='formulario__label'>Si</label>
+                                    <div className='lines-form'>
+                                        <div className='observ-form'>
+                                            <img src={Nevera} alt='nevera' className='nevera' />
+                                            <p>Nevera</p>
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='nevera'
+                                                    onChange={handleChange}
+                                                    value={"Si"} />
+                                                <label className='formulario__label'>Si</label>
+                                            </div>
+
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='nevera'
+                                                    onChange={handleChange}
+                                                    value={"No"} />
+                                                <label className='formulario__label'>No</label>
+                                            </div>
                                         </div>
 
-                                        <div className='selectors-radio'>
-                                            <input  
-                                                type="radio"
-                                                name='wifi'
-                                                onChange={handleChange}
-                                                value={"No"}/>
-                                            <label className='formulario__label'>No</label>
+                                        <div className='observ-form'>
+                                            <p><i className="fa-solid fa-tv"></i>TV</p>
+                                            <div className='selectors-radio'>
+                                                <input type="radio"
+                                                    name='tv'
+                                                    onChange={handleChange}
+                                                    value={"Si"} />
+                                                <label className='formulario__label'>Si</label>
+                                            </div>
+
+                                            <div className='selectors-radio'>
+                                                <input type="radio"
+                                                    name='tv'
+                                                    onChange={handleChange}
+                                                    value={"No"} />
+                                                <label className='formulario__label'>No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='lines-form'>
+                                        <div className='observ-form'>
+                                            <p><i className="fa-solid fa-bath"></i>Baño</p>
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='banio'
+                                                    onChange={handleChange}
+                                                    value={"Si"} />
+                                                <label className='formulario__label'>Si</label>
+                                            </div>
+
+                                            <div className='selectors-radio'>
+                                                <input
+                                                    type="radio"
+                                                    name='banio'
+                                                    onChange={handleChange}
+                                                    value={"No"} />
+                                                <label className='formulario__label'>No</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className='lines-form'>
-                                    <div className='observ-form'>
-                                        <img src={Nevera} alt='nevera' className='nevera' />
-                                        <p>Nevera</p>
-                                        <div className='selectors-radio'>
-                                            <input 
-                                                type="radio" 
-                                                name='nevera'
-                                                onChange={handleChange}
-                                                value={"Si"}/>
-                                            <label className='formulario__label'>Si</label>
-                                        </div>
-
-                                        <div className='selectors-radio'>
-                                            <input 
-                                                type="radio" 
-                                                name='nevera'
-                                                onChange={handleChange}
-                                                value={"No"}/>
-                                            <label className='formulario__label'>No</label>
-                                        </div>
-                                    </div>
-
-                                    <div className='observ-form'>
-                                        <p><i className="fa-solid fa-tv"></i>TV</p>
-                                        <div className='selectors-radio'>
-                                            <input type="radio" 
-                                            name='tv'
-                                            onChange={handleChange}
-                                            value={"Si"}/>
-                                            <label className='formulario__label'>Si</label>
-                                        </div>
-
-                                        <div className='selectors-radio'>
-                                            <input type="radio" 
-                                            name='tv'
-                                            onChange={handleChange}
-                                            value={"No"}/>
-                                            <label className='formulario__label'>No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='lines-form'>
-                                    <div className='observ-form'>
-                                        <p><i className="fa-solid fa-bath"></i>Baño</p>
-                                        <div className='selectors-radio'>
-                                            <input 
-                                                type="radio"
-                                                name='banio'
-                                                onChange={handleChange}
-                                                value={"Si"} />
-                                            <label className='formulario__label'>Si</label>
-                                        </div>
-
-                                        <div className='selectors-radio'>
-                                            <input 
-                                                type="radio"
-                                                name='banio'
-                                                onChange={handleChange}
-                                                value={"No"} />
-                                            <label className='formulario__label'>No</label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
                         </div>
                     </div>
 
