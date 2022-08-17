@@ -32,7 +32,7 @@ const FormHab = () => {
 
 
     const handleChange = ({ target }) => {
-        console.log(target.value)
+        // console.log(target.value)
         
         //Cada vez que haya un cambio se va a guardar el valor en el estado data
         setData({
@@ -44,27 +44,29 @@ const FormHab = () => {
     }
 
     /*4. Crear petición asíncrona*/
-    const url = "https://hoteliakuepa.herokuapp.com/habitaciones/";
+    const url = "https://hoteliakuepa.herokuapp.com/habitaciones";
 
     /*3. funcion para procesar el envío del formulario*/
     const handleSubmit = async (e) => {
-        let data = new FormData();
-        data.append('_id', data._id)
-        data.append('nombrehab', data.nombrehab)
-        data.append('capacidad', data.capacidad)
-        data.append('camas', data.camas)
-        data.append('descripcion', data.descripcion)
-        data.append('wifi', data.wifi)
-        data.append('tv', data.tv)    
-        data.append('banio', data.banio)
-        data.append('cajafuerte', data.cajafuerte)
-        data.append('nevera', data.nevera)
-        data.append('valornoche', data.valornoche)
-        data.append('estado', data.estado)
-        data.append('img', data.img)
-        data.append('__v', data.__v)
-        data.append('reservas', data.reservas)
-
+        // console.log(data.nombrehab)
+        // let data = new FormData();
+        // console.log(data.nombrehab)
+        // data.append('_id', data._id)
+        // data.append('nombrehab', data.nombrehab)
+        // data.append('capacidad', data.capacidad)
+        // data.append('camas', data.camas)
+        // data.append('descripcion', data.descripcion)
+        // data.append('wifi', data.wifi)
+        // data.append('tv', data.tv)    
+        // data.append('banio', data.banio)
+        // data.append('cajafuerte', data.cajafuerte)
+        // data.append('nevera', data.nevera)
+        // data.append('valornoche', data.valornoche)
+        // data.append('estado', data.estado)
+        // data.append('img', data.img)
+        // data.append('__v', data.__v)
+        // data.append('reservas', data.reservas)
+        
         let config = {
             header : {
               'Content-Type' : 'multipart/form-data'
@@ -73,7 +75,7 @@ const FormHab = () => {
 
         e.preventDefault();
         const response = await axios.post(url, data, config);//await espera hasta que se ejcute la petición
-        //console.log(response);
+        // console.log(response);
         if (response.status === 200) {
             Swal.fire(
                 'Guardado!',
@@ -106,7 +108,7 @@ const FormHab = () => {
                         <div className='flex-form' id='grupo__nohab'>
                             <label className='formulario__label'>No. de Hab</label>
                             
-                            <input 
+                            <input  
                                 className='no-hab' 
                                 placeholder="Ingrese el número de la habitación"
                                 type='number' 
@@ -119,7 +121,7 @@ const FormHab = () => {
 
                         <div className='flex-form nombrehab'>
                             <label className='formulario__label'>Nombre de Habitación</label>
-                            <input 
+                            <input  
                                 placeholder="Ej: President's Suite"
                                 className='no-hab' 
                                 type='text' 
@@ -142,7 +144,7 @@ const FormHab = () => {
                         </div>
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Capacidad de Personas</label>
-                            <input 
+                            <input  
                                 type='number' 
                                 name='capacidad' 
                                 value={data.capacidad}
@@ -151,7 +153,7 @@ const FormHab = () => {
                         </div>
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Precio</label>
-                            <input 
+                            <input  
                                 placeholder="Ej: 000000"
                                 className='precio-form' 
                                 type='number' 
@@ -162,7 +164,7 @@ const FormHab = () => {
                         </div>
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>No. de Camas</label>
-                            <input 
+                            <input  
                                 className='camas-input-form'
                                 type='number' 
                                 name='camas'
@@ -193,7 +195,7 @@ const FormHab = () => {
                         <div className='flex-form  file-select-form'>
                             <label>Fotos</label>
                             <div className='flex-select-form'>
-                                <input 
+                                <input  
                                     name='img'
                                     // value={`https://hoteliakuepa.herokuapp.com${data.img}`}
                                     
@@ -220,7 +222,7 @@ const FormHab = () => {
                                         </div>
 
                                         <div className='selectors-radio'>
-                                            <input 
+                                            <input  
                                                 type="radio" 
                                                 name="cajafuerte" 
                                                 onChange={handleChange} 
@@ -230,7 +232,7 @@ const FormHab = () => {
                                         </div>
 
                                         <div className='selectors-radio'>
-                                            <input 
+                                            <input  
                                                 type="radio" 
                                                 name="cajafuerte"
                                                 onChange={handleChange}
@@ -243,7 +245,7 @@ const FormHab = () => {
                                     <div className='observ-form'>
                                         <p><i className="fa-solid fa-wifi"></i>WI-FI</p>
                                         <div className='selectors-radio'>
-                                            <input 
+                                            <input   
                                                 type="radio"
                                                 name='wifi'
                                                 onChange={handleChange}
@@ -252,7 +254,7 @@ const FormHab = () => {
                                         </div>
 
                                         <div className='selectors-radio'>
-                                            <input 
+                                            <input  
                                                 type="radio"
                                                 name='wifi'
                                                 onChange={handleChange}
@@ -267,18 +269,20 @@ const FormHab = () => {
                                         <img src={Nevera} alt='nevera' className='nevera' />
                                         <p>Nevera</p>
                                         <div className='selectors-radio'>
-                                            <input type="radio" 
-                                            name='nevera'
-                                            onChange={handleChange}
-                                            value={"Si"}/>
+                                            <input 
+                                                type="radio" 
+                                                name='nevera'
+                                                onChange={handleChange}
+                                                value={"Si"}/>
                                             <label className='formulario__label'>Si</label>
                                         </div>
 
                                         <div className='selectors-radio'>
-                                            <input type="radio" 
-                                            name='nevera'
-                                            onChange={handleChange}
-                                            value={"No"}/>
+                                            <input 
+                                                type="radio" 
+                                                name='nevera'
+                                                onChange={handleChange}
+                                                value={"No"}/>
                                             <label className='formulario__label'>No</label>
                                         </div>
                                     </div>
