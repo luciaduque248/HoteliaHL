@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { api } from '../utils/peticiones';
 import Nevera from '../assets/img/iconos/nevera.png'
 
-import '../Admin/Edit.css'
+import '../assets/css/Edit.css'
 
 function EditModal({ habitacion, close }) {
     const handleEdit = async (e) => {
