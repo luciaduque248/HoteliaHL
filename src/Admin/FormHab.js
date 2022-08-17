@@ -49,9 +49,7 @@ const FormHab = () => {
 
     /*3. funcion para procesar el envío del formulario*/
     const handleSubmit = async (e) => {
-        // console.log(data.nombrehab)
         // let data = new FormData();
-        // console.log(data.nombrehab)
         // data.append('_id', data._id)
         // data.append('nombrehab', data.nombrehab)
         // data.append('capacidad', data.capacidad)
@@ -80,7 +78,7 @@ const FormHab = () => {
         if (response.status === 200) {
             Swal.fire(
                 'Guardado!',
-                `La habitación <strong> ${response.data.nombrehab}</strong> ha sido registrada exitosamente!`,
+                `La habitación <strong> ${response.nombrehab}</strong> ha sido registrada exitosamente!`,
                 'success'
             )
 
@@ -107,7 +105,7 @@ const FormHab = () => {
                             <label className='formulario__label'>No. de Hab</label>
                             
                             <input
-                                required
+                                
                                 className='no-hab' 
                                 placeholder="Ingrese el número de la habitación"
                                 type='number' 
@@ -121,7 +119,7 @@ const FormHab = () => {
                         <div className='flex-form nombrehab'>
                             <label className='formulario__label'>Nombre de Habitación</label>
                             <input 
-                                required 
+                                 
                                 placeholder="Ej: President's Suite"
                                 className='no-hab' 
                                 type='text' 
@@ -145,7 +143,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Capacidad de Personas</label>
                             <input  
-                                required
+                                
                                 type='number' 
                                 name='capacidad' 
                                 value={data.capacidad}
@@ -155,7 +153,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Precio</label>
                             <input  
-                                required
+                                
                                 placeholder="Ej: 000000"
                                 className='precio-form' 
                                 type='number' 
@@ -167,7 +165,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>No. de Camas</label>
                             <input  
-                                required
+                                
                                 className='camas-input-form'
                                 type='number' 
                                 name='camas'
@@ -182,7 +180,7 @@ const FormHab = () => {
                         <div className='flex-form'>
                             <label className='formulario__label'>Descripción</label>
                             <textarea
-                                required
+                                
                                 value={data.descripcion}
                                 onChange={handleChange} 
                                 placeholder="Ingrese la descripción de la habitación" 
@@ -202,7 +200,7 @@ const FormHab = () => {
                                 <div className='flex-select-form'>
                                     <input
                                         name='img'
-                                        required
+                                        
                                         onChange={handleChange}
                                         className='fotos-edit-form'
                                         type='file' />
