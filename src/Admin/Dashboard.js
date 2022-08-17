@@ -26,13 +26,13 @@ function Dashboard() {
         </div>
         <div className='group-menu-admin'>
           <div>
-            <Link to="/Hotelia/Admin/list-habitaciones" className="group-item-admin"><i class="fa-solid fa-bed"></i> HABITACIONES</Link>
+            <Link to="/Hotelia/Admin/list-habitaciones" className="group-item-admin"><i className="fa-solid fa-bed"></i> HABITACIONES</Link>
           </div>
           <div className='border-admin'>
-            <Link to="/Hotelia/Admin/form-habitaciones" className="group-item-admin"><i class="fa-solid fa-circle-plus"></i> CREAR HABITACIÓN</Link>
+            <Link to="/Hotelia/Admin/form-habitaciones" className="group-item-admin"><i className="fa-solid fa-circle-plus"></i> CREAR HABITACIÓN</Link>
           </div>
           <div>
-            <Link to="/Hotelia/Admin/Perfil" className="group-item-admin"><i class="fa-solid fa-user-pen"></i>MI PERFIL</Link>
+            <Link to="/Hotelia/Admin/Perfil" className="group-item-admin"><i className="fa-solid fa-user-pen"></i>MI PERFIL</Link>
           </div>
         </div>
       </div>

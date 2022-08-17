@@ -12,8 +12,8 @@ function AdminNavBar() {
     <nav className='admin-nav'>
       <input type={'checkbox'} id="chk-menu" />
       <div className='container-nav'>
-        <label for="chk-menu" className="btn-menu">
-          <i class="fa-solid fa-bars"></i>
+        <label htmlFor="chk-menu" className="btn-menu">
+          <i className="fa-solid fa-bars"></i>
         </label>
         <div>
           <img src={isotype} alt="white-isotype" className='isotype' />
@@ -28,11 +28,11 @@ function AdminNavBar() {
         </div>
       </div>
       <div className="items">
-        <Link to="/list-habitaciones" className="item"><i class="fa-solid fa-bed"></i> HABITACIONES</Link>
+        <Link to="/list-habitaciones" className="item"><i className="fa-solid fa-bed"></i> HABITACIONES</Link>
         <hr className="line-nav" />
-        <Link to="/form-habitaciones" className="item"><i class="fa-solid fa-circle-plus"></i> CREAR HABITACIÓN</Link>
+        <Link to="/form-habitaciones" className="item"><i className="fa-solid fa-circle-plus"></i> CREAR HABITACIÓN</Link>
         <hr className="line-nav" />
-        <Link to="/perfil" className="item"><i class="fa-solid fa-user-pen"></i> MI PERFIL</Link>
+        <Link to="/perfil" className="item"><i className="fa-solid fa-user-pen"></i> MI PERFIL</Link>
       </div>
     </nav >
 
