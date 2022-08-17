@@ -6,6 +6,7 @@ import Footer from '../components/Footer/Footer';
 
 import '../assets/css/ListHabs.css';
 import EditModal from './EditModal';
+import AdminNavBar from '../components/Dashboards/Admin_NavBar';
 
 
 function ListHabs() {
@@ -65,7 +66,7 @@ function ListHabs() {
 
     return (
         <div>
-            <div className='nav-bar-list'>Header</div>
+            <AdminNavBar/>
 
             <div className='container-list-habs'>
                 <h1>HABITACIONES</h1>

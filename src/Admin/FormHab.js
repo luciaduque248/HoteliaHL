@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import '../assets/css/FormHab.css'
 import Footer from '../components/Footer/Footer'
 import Nevera from '../assets/img/iconos/nevera.png'
+import AdminNavBar from '../components/Dashboards/Admin_NavBar';
 // import Admin_NavBar from '../components/Dashboards/Admin_NavBar'
 
 const FormHab = () => {
@@ -96,8 +97,7 @@ const FormHab = () => {
     
     return (
         <div>
-            {/* <Admin_NavBar/> */}
-            <div className='nav-bar-list'>Header</div>
+            <AdminNavBar/>
 
             <div className='container-form-habs'>
                 <h1>CREAR HABITACIÓN</h1>
