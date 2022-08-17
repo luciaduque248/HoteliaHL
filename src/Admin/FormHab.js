@@ -106,7 +106,8 @@ const FormHab = () => {
                         <div className='flex-form' id='grupo__nohab'>
                             <label className='formulario__label'>No. de Hab</label>
                             
-                            <input  
+                            <input
+                                required
                                 className='no-hab' 
                                 placeholder="Ingrese el número de la habitación"
                                 type='number' 
@@ -119,7 +120,8 @@ const FormHab = () => {
 
                         <div className='flex-form nombrehab'>
                             <label className='formulario__label'>Nombre de Habitación</label>
-                            <input  
+                            <input 
+                                required 
                                 placeholder="Ej: President's Suite"
                                 className='no-hab' 
                                 type='text' 
@@ -134,7 +136,7 @@ const FormHab = () => {
                     <div className='line2-habitacion'>
                         <div className='select-estado-form flex-form'>
                             <label className='formulario__label estado-label'>Estado</label>
-                            <select name="estado"  className='estado-form' onChange={handleChange}>
+                            <select name="estado" className='estado-form' onChange={handleChange}>
                                 <option value={data.estado} className='estado-form-yes'>DISPONIBLE</option>
                                 <option value={data.estado} className='estado-form-no'selected>NO DISPONIBLE</option>
                                 <option value={data.estado} className='estado-form-upkeep'>EN MANTENIMIENTO</option>
@@ -143,6 +145,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Capacidad de Personas</label>
                             <input  
+                                required
                                 type='number' 
                                 name='capacidad' 
                                 value={data.capacidad}
@@ -152,6 +155,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>Precio</label>
                             <input  
+                                required
                                 placeholder="Ej: 000000"
                                 className='precio-form' 
                                 type='number' 
@@ -163,6 +167,7 @@ const FormHab = () => {
                         <div className='flex-form flex-form-line2'>
                             <label className='formulario__label'>No. de Camas</label>
                             <input  
+                                required
                                 className='camas-input-form'
                                 type='number' 
                                 name='camas'
@@ -177,6 +182,7 @@ const FormHab = () => {
                         <div className='flex-form'>
                             <label className='formulario__label'>Descripción</label>
                             <textarea
+                                required
                                 value={data.descripcion}
                                 onChange={handleChange} 
                                 placeholder="Ingrese la descripción de la habitación" 
@@ -195,8 +201,7 @@ const FormHab = () => {
                             <div className='flex-select-form'>
                                 <input  
                                     name='img'
-                                    // value={`https://hoteliakuepa.herokuapp.com${data.img}`}
-                                    
+                                    required
                                     onChange={handleChange} 
                                     className='fotos-edit-form' 
                                     type='file' />
