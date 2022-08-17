@@ -204,15 +204,9 @@ label{
     color: white;
 }
 
-.volver-form{
-    background-color: #B7B7B7;
-    box-shadow: 3px 8px 10px rgba(190, 185, 185, 0.5);
-}
-
 .flex-form-selector:nth-child(1){
     margin-right: 5rem;
 }
-
 
 .line3-selector .flex-form-selector:nth-child(1){
     margin-left: 7rem;
@@ -530,6 +524,10 @@ label{
 
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+
+    .flex-fotos-observ{
+        flex-direction: column;
+    }
     .container-form-habs form{
         /* background-color: red; */
         padding: 1rem 1rem;
