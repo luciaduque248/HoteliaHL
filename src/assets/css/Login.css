@@ -13,6 +13,7 @@
 
 
 .volver-login button{
+    z-index: 100;
     color: white;
     background-color: transparent;
     border: solid;
@@ -81,7 +82,6 @@
 
 
 .formulario-login button{
-
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 30px;
@@ -92,7 +92,7 @@
     font-weight: 700;
     font-size: 20px;
     width: 30vw;
-    margin-top: 1rem;
+    margin-top: 0rem;
 }
 
 .form-login-group label {
@@ -119,7 +119,7 @@
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .formulario-login{
-        width: 80vw;
+        width: 60vw;
     }
 
     .formulario-login h1{
@@ -131,37 +131,105 @@
     }
 
     .formulario-login img{
-        width: 20vw;
+        margin-top: 2rem;
+        width: 45vw;
     }
 
     .form-login-group input{
-        width: 60vw;
+        width: 50vw;
     }
 
     .botones-login{
         flex-direction: row;
     }
+
+    .volver-login button{
+        font-size: 30px;
+        right: 100px;
+        left: 100px;
+    }
+
+    .registrate p{
+        margin-top: 1rem;
+    }
+
+    .formulario-login button {
+        margin-top: 0rem;
+        width: 50vw;
+    }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
     .formulario-login{
-        text-align: center;
+        width: 60vw;
     }
+
     .formulario-login img{
-        width:15vw;
+        width:35vw;
     }
 
     .formulario-login h1{
-        font-size: 15px;
+        font-size: 25px;
     }
 
     .formulario-login p{
-        font-size: 2vw;
+        font-size: 3vw;
+    }
+
+    .form-login-group input{
+        width: 50vw;
+    }
+
+    .volver-login button{
+        font-size: 35px;
+        right: 18vw;
+        /* left: 50vw; */
+    }
+
+    .registrate p{
+        font-size: 18px;
+        margin-top: 0.5rem;
+    }
+
+    .formulario-login button {
+        margin-top: 0.2rem;
+        width: 50vw;
     }
 }
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
     .formulario-login{
-        text-align: center;
+        width: 60vw;
+    }
+
+    .formulario-login img{
+        width:25vw;
+    }
+
+    .formulario-login h1{
+        font-size: 25px;
+    }
+
+    .formulario-login p{
+        font-size: 3vw;
+    }
+
+    .form-login-group input{
+        width: 50vw;
+    }
+
+    /* .volver-login button{
+        font-size: 35px;
+        right: 18vw;
+    } */
+
+    .registrate p{
+        font-size: 18px;
+        margin-top: 0.5rem;
+    }
+
+    .formulario-login button {
+        margin-top: 0.2rem;
+        width: 50vw;
     }
 }

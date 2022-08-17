@@ -85,7 +85,7 @@ const Login = () => {
                         </div>
 
                         <div className='registrate'>
-                            <Link to=''>¿No tienes una cuenta? Regístrate</Link>
+                            <Link to=''><p>¿No tienes una cuenta? Regístrate</p></Link>
                         </div>
 
                         <div className='botones-login'>
@@ -100,7 +100,7 @@ const Login = () => {
             </Formik>
 
             <div className='volver-login'>
-                <button><Link to="/Hotelia/"><i className="fa-solid fa-house"></i></Link></button>
+                <button><Link to="/"><i className="fa-solid fa-house"></i></Link></button>
             </div>
         </div>
     );
