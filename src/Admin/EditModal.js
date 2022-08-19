@@ -151,22 +151,22 @@ function EditModal({ habitacion, close }) {
 
                                 <div className='each-option-vertical'>
                                     <label>Estado</label>
-                                    <select name="estado" className='' >
+                                    <select name="estado" className='' onChange={handleValues}>
                                         <option 
                                             // onChange={handleValues}
-                                            value={habitacion.estado} 
+                                            value={'Disponible'} 
                                             selected={habitacion.estado === "Disponible" ? true : false} className='estado-form-yes'>DISPONIBLE
                                         </option>
                                         
                                         <option 
                                             // onChange={handleValues}
-                                            value={habitacion.estado} 
+                                            value={'No disponible'} 
                                             selected={habitacion.estado === "No disponible" ? true : false}     className='estado-form-no'>NO DISPONIBLE
                                         </option>
                                         
                                         <option 
                                             // onChange={handleValues}
-                                            value={habitacion.estado} 
+                                            value={'En mantenimiento'} 
                                             selected={habitacion.estado === "En mantenimiento" ? true : false} className='estado-form-upkeep'>EN MANTENIMIENTO
                                         </option>
                                     </select>
