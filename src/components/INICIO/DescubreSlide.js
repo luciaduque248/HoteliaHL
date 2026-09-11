@@ -1,87 +1,60 @@
-import React  from "react";
-import Slider from "react-slick";
+import React from 'react';
+import Slider from 'react-slick';
+
 import Descubre1 from '../../assets/img/descubreHL1.png';
-import Descubre2 from '../../assets/img/descubreHL2.png'
-import Descubre3 from '../../assets/img/descubreHL3.png'
+import Descubre2 from '../../assets/img/descubreHL2.png';
+import Descubre3 from '../../assets/img/descubreHL3.png';
 
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
+function GalleryArrow({ className, onClick, direction }) {
     return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "#157A8A", borderRadius: "35px", height: "20px", width: "35px", paddingTop: "0.6rem", padding: "0.2rem", margin: '0 -2rem' }}
+        <button
+            type='button'
+            className={`${className || ''} gallery-arrow gallery-arrow--${direction}`}
             onClick={onClick}
-        />
+            aria-label={direction === 'next' ? 'Siguiente imagen' : 'Imagen anterior'}
+        >
+            <span aria-hidden='true'>{direction === 'next' ? '›' : '‹'}</span>
+        </button>
     );
 }
-
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "#157A8A", borderRadius: "35px", height: "20px", width: "35px", paddingTop: "0.6rem", padding: "0.2rem",margin: '0 -2rem' }}
-            onClick={onClick}
-        />
-    );
-}
-
 
 function DescubreSlide() {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 320,
+        cssEase: 'cubic-bezier(0.22, 1, 0.36, 1)',
         slidesToShow: 1,
         slidesToScroll: 1,
-        initialSlide: 0,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
+        swipeToSlide: true,
+        draggable: true,
+        touchThreshold: 8,
+        autoplay: false,
+        nextArrow: <GalleryArrow direction='next' />,
+        prevArrow: <GalleryArrow direction='prev' />,
         responsive: [
             {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: true
-                }
+                breakpoint: 680,
+                settings: { arrows: false },
             },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
+        ],
     };
-
 
     return (
         <div className='descubre-galeria'>
             <Slider {...settings}>
-                <div>
-                    <img src={Descubre1} alt="foto1"/>
-                </div>
-                <div>
-                    <img src={Descubre2} alt="foto1"/>
-                </div>
-                <div>
-                    <img src={Descubre3} alt="foto1"/>
-                </div>
+                <figure className='gallery-frame'>
+                    <img src={Descubre1} alt='Espacios de Hotelia' />
+                </figure>
+                <figure className='gallery-frame'>
+                    <img src={Descubre2} alt='Habitación de Hotelia' />
+                </figure>
+                <figure className='gallery-frame'>
+                    <img src={Descubre3} alt='Detalles de una habitación de Hotelia' />
+                </figure>
             </Slider>
         </div>
     );
 }
 
-export default DescubreSlide
+export default DescubreSlide;
