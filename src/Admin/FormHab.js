@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import '../assets/css/FormHab.css';
 import AdminNavBar from '../components/Dashboards/Admin_NavBar';
-import { api } from '../utils/peticiones';
+import { createRoom, fileToDataUrl } from '../utils/demoHotelia';
 
 const initialRoom = {
     _id: '',
@@ -34,7 +33,7 @@ const amenityOptions = [
 function FormHab() {
     const [data, setData] = useState(initialRoom);
     const [submitting, setSubmitting] = useState(false);
-    const [fileKey, setFileKey] = useState(0);
+    const navigate = useNavigate();
 
     const handleChange = ({ target }) => {
         const value = target.type === 'file' ? target.files?.[0] || null : target.value;
@@ -44,31 +43,32 @@ function FormHab() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const payload = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (value !== null && value !== undefined) payload.append(key, value);
-        });
-
         try {
             setSubmitting(true);
-            const response = await axios.post(api.replace(/\/$/, ''), payload, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+            const imageData = data.img ? await fileToDataUrl(data.img) : null;
+
+            createRoom({
+                ...data,
+                img: undefined,
+                imageData,
+                imageKey: imageData ? undefined : 'hotel',
             });
 
-            if (response.status >= 200 && response.status < 300) {
-                await Swal.fire({
-                    title: 'Habitación creada',
-                    text: `${data.nombrehab || 'La habitación'} fue registrada correctamente.`,
-                    icon: 'success',
-                    confirmButtonColor: '#0f6f79',
-                });
-                setData(initialRoom);
-                setFileKey((current) => current + 1);
-            }
-        } catch (error) {
             await Swal.fire({
-                title: 'No se pudo crear la habitación',
-                text: 'El API no completó la solicitud. Revisa la conexión e inténtalo nuevamente.',
+                title: 'Habitación creada',
+                text: `${data.nombrehab || 'La habitación'} fue agregada al inventario demo.`,
+                icon: 'success',
+                confirmButtonColor: '#0f6f79',
+            });
+
+            navigate('/list-habitaciones');
+        } catch (error) {
+            const duplicate = error?.message === 'ROOM_EXISTS';
+            await Swal.fire({
+                title: duplicate ? 'Número de habitación repetido' : 'No se pudo crear la habitación',
+                text: duplicate
+                    ? 'Usa un número diferente porque esa habitación ya existe en el inventario.'
+                    : 'No pudimos guardar los datos en la demo. Inténtalo nuevamente.',
                 icon: 'error',
                 confirmButtonColor: '#0f6f79',
             });
@@ -86,7 +86,7 @@ function FormHab() {
                     <div>
                         <span className='admin-eyebrow'>Alta de habitación</span>
                         <h1>Nueva habitación</h1>
-                        <p>Completa la información principal, el estado y los servicios antes de agregarla al inventario.</p>
+                        <p>Completa la información principal, el estado y los servicios antes de agregarla al inventario demo.</p>
                     </div>
                     <Link to='/list-habitaciones' className='room-form-page__back'>
                         <i className='fa-solid fa-arrow-left' aria-hidden='true'></i>
@@ -107,27 +107,12 @@ function FormHab() {
                         <div className='room-form__grid room-form__grid--two'>
                             <label className='room-field'>
                                 <span>Número de habitación</span>
-                                <input
-                                    required
-                                    min='1'
-                                    type='number'
-                                    name='_id'
-                                    value={data._id}
-                                    onChange={handleChange}
-                                    placeholder='Ej. 204'
-                                />
+                                <input required min='1' type='number' name='_id' value={data._id} onChange={handleChange} placeholder='Ej. 204' />
                             </label>
 
                             <label className='room-field'>
                                 <span>Nombre de habitación</span>
-                                <input
-                                    required
-                                    type='text'
-                                    name='nombrehab'
-                                    value={data.nombrehab}
-                                    onChange={handleChange}
-                                    placeholder='Ej. Suite Hotelia'
-                                />
+                                <input required type='text' name='nombrehab' value={data.nombrehab} onChange={handleChange} placeholder='Ej. Suite Hotelia' />
                             </label>
                         </div>
 
@@ -145,15 +130,7 @@ function FormHab() {
                                 <span>Capacidad</span>
                                 <div className='room-field__with-icon'>
                                     <i className='fa-solid fa-users' aria-hidden='true'></i>
-                                    <input
-                                        required
-                                        min='1'
-                                        type='number'
-                                        name='capacidad'
-                                        value={data.capacidad}
-                                        onChange={handleChange}
-                                        placeholder='2'
-                                    />
+                                    <input required min='1' type='number' name='capacidad' value={data.capacidad} onChange={handleChange} placeholder='2' />
                                 </div>
                             </label>
 
@@ -161,15 +138,7 @@ function FormHab() {
                                 <span>Precio por noche</span>
                                 <div className='room-field__with-icon'>
                                     <span className='room-field__currency'>$</span>
-                                    <input
-                                        required
-                                        min='0'
-                                        type='number'
-                                        name='valornoche'
-                                        value={data.valornoche}
-                                        onChange={handleChange}
-                                        placeholder='220000'
-                                    />
+                                    <input required min='0' type='number' name='valornoche' value={data.valornoche} onChange={handleChange} placeholder='220000' />
                                 </div>
                             </label>
 
@@ -177,29 +146,14 @@ function FormHab() {
                                 <span>Número de camas</span>
                                 <div className='room-field__with-icon'>
                                     <i className='fa-solid fa-bed' aria-hidden='true'></i>
-                                    <input
-                                        required
-                                        min='1'
-                                        type='number'
-                                        name='camas'
-                                        value={data.camas}
-                                        onChange={handleChange}
-                                        placeholder='1'
-                                    />
+                                    <input required min='1' type='number' name='camas' value={data.camas} onChange={handleChange} placeholder='1' />
                                 </div>
                             </label>
                         </div>
 
                         <label className='room-field'>
                             <span>Descripción</span>
-                            <textarea
-                                required
-                                rows='5'
-                                name='descripcion'
-                                value={data.descripcion}
-                                onChange={handleChange}
-                                placeholder='Describe el espacio, la experiencia y los aspectos que diferencian esta habitación.'
-                            />
+                            <textarea required rows='5' name='descripcion' value={data.descripcion} onChange={handleChange} placeholder='Describe el espacio, la experiencia y los aspectos que diferencian esta habitación.' />
                             <small>{data.descripcion.length} caracteres</small>
                         </label>
                     </section>
@@ -217,10 +171,10 @@ function FormHab() {
                             <span className='room-file-field__icon'><i className='fa-solid fa-cloud-arrow-up' aria-hidden='true'></i></span>
                             <span className='room-file-field__copy'>
                                 <strong>{data.img ? data.img.name : 'Seleccionar fotografía'}</strong>
-                                <small>El archivo se enviará al servicio actual de Hotelia.</small>
+                                <small>Para esta demo, la imagen queda guardada localmente en tu navegador.</small>
                             </span>
                             <span className='room-file-field__button'>Elegir archivo</span>
-                            <input key={fileKey} type='file' name='img' accept='image/*' onChange={handleChange} />
+                            <input type='file' name='img' accept='image/*' onChange={handleChange} />
                         </label>
                     </section>
 
@@ -242,23 +196,11 @@ function FormHab() {
                                     </legend>
                                     <div className='amenity-control__options'>
                                         <label className={data[amenity.name] === 'si' ? 'is-selected' : ''}>
-                                            <input
-                                                type='radio'
-                                                name={amenity.name}
-                                                value='si'
-                                                checked={data[amenity.name] === 'si'}
-                                                onChange={handleChange}
-                                            />
+                                            <input type='radio' name={amenity.name} value='si' checked={data[amenity.name] === 'si'} onChange={handleChange} />
                                             Sí
                                         </label>
                                         <label className={data[amenity.name] === 'no' ? 'is-selected' : ''}>
-                                            <input
-                                                type='radio'
-                                                name={amenity.name}
-                                                value='no'
-                                                checked={data[amenity.name] === 'no'}
-                                                onChange={handleChange}
-                                            />
+                                            <input type='radio' name={amenity.name} value='no' checked={data[amenity.name] === 'no'} onChange={handleChange} />
                                             No
                                         </label>
                                     </div>
