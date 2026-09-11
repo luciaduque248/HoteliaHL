@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../assets/css/DashboardAdmin.css';
+import '../assets/css/AdminDemoPolish.css';
 import AdminNavBar from '../components/Dashboards/Admin_NavBar';
 import photoAdmin from '../assets/img/perfilADMIN.png';
 import { getRooms } from '../utils/demoHotelia';
