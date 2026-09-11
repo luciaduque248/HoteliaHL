@@ -8,7 +8,6 @@ import SimpleSlider from '../components/INICIO/Slide';
 import FormBuscar from '../components/INICIO/FormBuscar';
 import CardSlide from '../components/INICIO/CardSlide';
 import ExpSlide from '../components/INICIO/ExpSlide';
-import Maps from '../assets/img/mapa.png';
 import Footer from '../components/Footer/Footer';
 import DescubreSlide from '../components/INICIO/DescubreSlide';
 
@@ -67,20 +66,17 @@ function Inicio() {
                         <span className='section-eyebrow'>Ubicación</span>
                         <h2 id='location-title'>En un punto práctico para moverte por Bogotá.</h2>
                         <p>
-                            Encuéntranos en la Carrera 37 #24 - 29, barrio Corferias. Consulta el mapa para ubicar fácilmente el hotel antes de tu llegada.
+                            Encuéntranos en la Carrera 37 #24 - 29, barrio Corferias. Explora el mapa para ubicar fácilmente el sector antes de tu llegada.
                         </p>
-                        <a
-                            className='location-link'
-                            href='https://www.google.com/maps/search/?api=1&query=Carrera+37+%2324-29+Bogota+Colombia'
-                            target='_blank'
-                            rel='noreferrer'
-                        >
-                            Abrir en Google Maps
-                            <i className='fa-solid fa-arrow-up-right-from-square' aria-hidden='true'></i>
-                        </a>
                     </div>
                     <div className='ubicacion'>
-                        <img src={Maps} alt='Mapa de ubicación de Hotelia en Bogotá' />
+                        <iframe
+                            src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7989469727936!2d-74.09387552502115!3d4.6299284453448175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bd79590f75b%3A0xf4bbf62246fe4e8e!2sHilton%20Bogota%20Corferias!5e0!3m2!1ses!2sco!4v1789164390603!5m2!1ses!2sco'
+                            title='Mapa de ubicación en Corferias, Bogotá'
+                            loading='lazy'
+                            allowFullScreen
+                            referrerPolicy='strict-origin-when-cross-origin'
+                        ></iframe>
                     </div>
                 </section>
             </main>
