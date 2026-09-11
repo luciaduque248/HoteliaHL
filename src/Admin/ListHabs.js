@@ -1,13 +1,17 @@
-import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
-import { api } from '../utils/peticiones';
-import FallbackRoom from '../assets/img/hotel-1.png';
 import '../assets/css/ListHabs.css';
 import EditModal from './EditModal';
 import AdminNavBar from '../components/Dashboards/Admin_NavBar';
+import {
+    deleteRoom,
+    formatCOP,
+    getRoomImage,
+    getRooms,
+    resetDemoRooms,
+} from '../utils/demoHotelia';
 
 const isEnabled = (value) => ['si', 'sí', 'true'].includes(String(value).trim().toLowerCase()) || value === true;
 
@@ -23,33 +27,12 @@ function ListHabs() {
     const [habitacion, setHabitacion] = useState({});
     const [modal, setModal] = useState(false);
     const [busqueda, setBusqueda] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [loadError, setLoadError] = useState(false);
     const [deletingId, setDeletingId] = useState(null);
 
+    const refreshRooms = () => setHabitaciones(getRooms());
+
     useEffect(() => {
-        if (modal) return undefined;
-
-        let active = true;
-        setLoading(true);
-
-        axios.get(api)
-            .then((response) => {
-                if (!active) return;
-                setHabitaciones(Array.isArray(response.data) ? response.data : []);
-                setLoadError(false);
-            })
-            .catch(() => {
-                if (!active) return;
-                setLoadError(true);
-            })
-            .finally(() => {
-                if (active) setLoading(false);
-            });
-
-        return () => {
-            active = false;
-        };
+        if (!modal) refreshRooms();
     }, [modal]);
 
     const habitacionesFiltradas = useMemo(() => {
@@ -67,7 +50,7 @@ function ListHabs() {
     const handleDelete = async (room) => {
         const result = await Swal.fire({
             title: '¿Eliminar habitación?',
-            text: `${room.nombrehab || `Habitación ${room._id}`} se eliminará del inventario.`,
+            text: `${room.nombrehab || `Habitación ${room._id}`} se eliminará de esta demo.`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí, eliminar',
@@ -78,26 +61,32 @@ function ListHabs() {
 
         if (!result.isConfirmed) return;
 
-        try {
-            setDeletingId(room._id);
-            await axios.delete(`${api}${room._id}`);
-            setHabitaciones((current) => current.filter((item) => item._id !== room._id));
-            await Swal.fire({
-                title: 'Habitación eliminada',
-                text: 'El inventario fue actualizado correctamente.',
-                icon: 'success',
-                confirmButtonColor: '#0f6f79',
-            });
-        } catch (error) {
-            await Swal.fire({
-                title: 'No se pudo eliminar',
-                text: 'El API no completó la solicitud. Inténtalo nuevamente.',
-                icon: 'error',
-                confirmButtonColor: '#0f6f79',
-            });
-        } finally {
-            setDeletingId(null);
-        }
+        setDeletingId(room._id);
+        deleteRoom(room._id);
+        refreshRooms();
+        setDeletingId(null);
+
+        await Swal.fire({
+            title: 'Habitación eliminada',
+            text: 'El inventario demo fue actualizado correctamente.',
+            icon: 'success',
+            confirmButtonColor: '#0f6f79',
+        });
+    };
+
+    const handleReset = async () => {
+        const result = await Swal.fire({
+            title: '¿Restaurar inventario demo?',
+            text: 'Se recuperarán las habitaciones originales de la demostración.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Restaurar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#0f6f79',
+        });
+
+        if (!result.isConfirmed) return;
+        setHabitaciones(resetDemoRooms());
     };
 
     return (
@@ -107,14 +96,20 @@ function ListHabs() {
             <main className='rooms-admin'>
                 <section className='rooms-admin__header'>
                     <div>
-                        <span className='admin-eyebrow'>Inventario</span>
+                        <span className='admin-eyebrow'>Inventario demo</span>
                         <h1>Habitaciones</h1>
-                        <p>Consulta el inventario, busca por nombre, número o estado y administra cada habitación.</p>
+                        <p>Consulta, busca y administra habitaciones sin depender del antiguo servicio externo de Hotelia.</p>
                     </div>
-                    <Link to='/form-habitaciones' className='rooms-admin__create'>
-                        <i className='fa-solid fa-plus' aria-hidden='true'></i>
-                        Nueva habitación
-                    </Link>
+                    <div className='rooms-admin__header-actions'>
+                        <button type='button' className='rooms-admin__reset' onClick={handleReset}>
+                            <i className='fa-solid fa-rotate-left' aria-hidden='true'></i>
+                            Restaurar demo
+                        </button>
+                        <Link to='/form-habitaciones' className='rooms-admin__create'>
+                            <i className='fa-solid fa-plus' aria-hidden='true'></i>
+                            Nueva habitación
+                        </Link>
+                    </div>
                 </section>
 
                 <section className='rooms-admin__toolbar' aria-label='Herramientas del inventario'>
@@ -140,33 +135,20 @@ function ListHabs() {
                     </div>
                 </section>
 
-                {loadError && (
-                    <div className='rooms-admin__notice' role='status'>
-                        <i className='fa-solid fa-triangle-exclamation' aria-hidden='true'></i>
-                        <div>
-                            <strong>No pudimos cargar el inventario.</strong>
-                            <span>El API histórico de Hotelia no está respondiendo en este momento.</span>
-                        </div>
+                <div className='rooms-admin__demo-note' role='status'>
+                    <i className='fa-solid fa-circle-check' aria-hidden='true'></i>
+                    <div>
+                        <strong>Demo totalmente funcional</strong>
+                        <span>Crear, editar y eliminar funciona en este navegador y se conserva durante la sesión del portafolio.</span>
                     </div>
-                )}
+                </div>
 
-                {loading ? (
-                    <div className='admin-room-grid' aria-label='Cargando habitaciones'>
-                        {[1, 2, 3].map((item) => <div className='admin-room-skeleton' key={item} />)}
-                    </div>
-                ) : habitacionesFiltradas.length > 0 ? (
+                {habitacionesFiltradas.length > 0 ? (
                     <div className='admin-room-grid'>
                         {habitacionesFiltradas.map((room) => (
                             <article className='admin-room-card' key={room._id}>
                                 <div className='admin-room-card__media'>
-                                    <img
-                                        src={room.img ? `https://hoteliakuepa.herokuapp.com${room.img}` : FallbackRoom}
-                                        alt={room.nombrehab || 'Habitación de Hotelia'}
-                                        onError={(event) => {
-                                            event.currentTarget.onerror = null;
-                                            event.currentTarget.src = FallbackRoom;
-                                        }}
-                                    />
+                                    <img src={getRoomImage(room)} alt={room.nombrehab || 'Habitación de Hotelia'} />
                                     <span className={`admin-room-status ${statusClass(room.estado)}`}>
                                         {room.estado || 'Sin estado'}
                                     </span>
@@ -180,7 +162,7 @@ function ListHabs() {
                                             <h2>{room.nombrehab || `Habitación ${room._id}`}</h2>
                                         </div>
                                         <div className='admin-room-card__price'>
-                                            <strong>{Number(room.valornoche || 0).toLocaleString('es-CO')}</strong>
+                                            <strong>{formatCOP(room.valornoche)}</strong>
                                             <span>COP / noche</span>
                                         </div>
                                     </div>
@@ -220,14 +202,14 @@ function ListHabs() {
                             </article>
                         ))}
                     </div>
-                ) : !loadError ? (
+                ) : (
                     <div className='rooms-admin__empty'>
                         <span><i className='fa-solid fa-bed' aria-hidden='true'></i></span>
                         <h2>No encontramos habitaciones</h2>
                         <p>{busqueda ? 'Prueba con otro término de búsqueda.' : 'Crea la primera habitación para comenzar a gestionar el inventario.'}</p>
                         {!busqueda && <Link to='/form-habitaciones'>Crear habitación</Link>}
                     </div>
-                ) : null}
+                )}
             </main>
 
             {modal ? <EditModal close={setModal} habitacion={habitacion} /> : null}
