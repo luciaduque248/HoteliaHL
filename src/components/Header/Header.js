@@ -1,36 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import '../../assets/css/Header.css'
+import '../../assets/css/Header.css';
 import Logo from '../../assets/img/LOGO.png';
 
 function Header() {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const closeMenu = () => setMenuOpen(false);
+
     return (
-        <div>
-            <nav className='navbar-inicio'>
-                <input type='checkbox' id='check' />
-                <label htmlFor='check' className='checkbtn'>
-                    <i className="fa-solid fa-bars"></i>
-                </label>
+        <header className='site-header'>
+            <nav className='navbar-inicio' aria-label='Navegación principal'>
+                <Link to='/' className='enlace' aria-label='Hotelia - Inicio' onClick={closeMenu}>
+                    <img src={Logo} alt='Hotelia' className='logo' />
+                </Link>
 
-                <div className='enlace'>
-                    <img src={Logo} alt='logo' className='logo'/>
-                    
+                <div className={`navbar-actions ${menuOpen ? 'is-open' : ''}`}>
+                    <ul className='navbar-ul'>
+                        <li><Link to='/' className='link' onClick={closeMenu}>Inicio</Link></li>
+                        <li><a href='#habitacion' className='link' onClick={closeMenu}>Habitaciones</a></li>
+                        <li><a href='#acerca-de-nosotros' className='link' onClick={closeMenu}>Hotelia</a></li>
+                        <li><a href='#ubicacion' className='link' onClick={closeMenu}>Ubicación</a></li>
+                        <li className='mobile-login-item'>
+                            <Link to='/login' className='link login' onClick={closeMenu}>Iniciar sesión</Link>
+                        </li>
+                    </ul>
                 </div>
 
-                <div className='button-reserva'>
-                    <Link to='/login'><button>RESERVA</button></Link>
+                <div className='header-cta'>
+                    <Link to='/login' className='login-link'>Iniciar sesión</Link>
+                    <Link to='/login' className='button-reserva' aria-label='Reservar una habitación'>
+                        Reservar
+                    </Link>
+                    <button
+                        type='button'
+                        className='menu-toggle'
+                        aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+                        aria-expanded={menuOpen}
+                        onClick={() => setMenuOpen((open) => !open)}
+                    >
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
-
-                <ul className='navbar-ul'>
-                    <li><Link to="/" className=' link'>Inicio</Link></li>
-                    <li><a href='#habitaciones&precios' className=' link'>Habitaciones</a></li>
-                    <li><a href='#acerca-de-nosotros' className=' link'>Acerca de nosotros</a></li>
-                    <li><Link to="/login" className=' link login'>Registrarse / Iniciar sesión</Link></li>
-                </ul>
             </nav>
-        </div>
-    )
+        </header>
+    );
 }
 
-export default Header
+export default Header;
