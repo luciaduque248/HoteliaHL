@@ -116,9 +116,9 @@ export const getRooms = () => {
 
     try {
         const stored = window.localStorage.getItem(ROOMS_KEY);
-        if (stored) {
+        if (stored !== null) {
             const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length) return parsed;
+            if (Array.isArray(parsed)) return parsed;
         }
     } catch (error) {
         console.warn('No fue posible leer el inventario demo.', error);
