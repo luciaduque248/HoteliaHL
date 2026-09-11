@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../assets/css/Inicio.css';
+import '../assets/css/HomePolish.css';
 
 import Header from '../components/Header/Header';
 import SimpleSlider from '../components/INICIO/Slide';
