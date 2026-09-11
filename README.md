@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# HoteliaHL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+HoteliaHL es una aplicación web de hotelería construida con React. Incluye una experiencia pública para descubrir el hotel y sus habitaciones, un flujo de inicio de sesión y vistas administrativas para gestionar habitaciones.
 
-## Available Scripts
+## ✨ Actualización de experiencia
 
-In the project directory, you can run:
+La interfaz fue revisada sobre el proyecto existente —sin reconstruirlo desde cero— aplicando criterios de interacción inspirados en `apple-design` y las skills de revisión de animación descritas en la guía de diseño utilizada para este proyecto.
 
-### `npm start`
+Principales mejoras:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- jerarquía visual y navegación responsive más claras;
+- feedback inmediato al presionar botones y controles;
+- animaciones cortas, reversibles y respetuosas de `prefers-reduced-motion`;
+- carruseles utilizables con mouse, touch y swipe;
+- tarjetas de habitaciones sin dependencia de `hover` para revelar información;
+- estados de carga y fallback visual si el API histórico no responde;
+- formulario de búsqueda adaptado a móvil;
+- login con validación sin efectos secundarios, botón para mostrar contraseña y estados de error accesibles;
+- estilos globales con tokens para color, radio, sombra, tipografía y movimiento;
+- mejoras de semántica, foco visible y etiquetas ARIA.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧰 Stack
 
-### `npm test`
+- React 18
+- React Router 6
+- Axios
+- Formik
+- React Slick
+- SweetAlert2
+- CSS responsive
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Scripts
 
-### `npm run build`
+```bash
+npm install
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para generar una build de producción:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📁 Estructura principal
 
-### `npm run eject`
+```text
+src/
+├── Admin/              # CRUD y vistas administrativas
+├── assets/             # CSS e imágenes
+├── components/         # Header, footer, home y dashboards
+├── pages/              # Inicio y login
+├── routes/             # Rutas de la aplicación
+└── utils/              # Configuración del API
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚠️ Estado del proyecto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Este repositorio nació como un proyecto académico y conserva una integración con un API histórico alojado en Heroku. La home incluye contenido de respaldo para que la experiencia visual no quede vacía si ese servicio no está disponible.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+El inicio de sesión actual sigue siendo un mecanismo de demostración implementado en frontend. **No debe considerarse autenticación segura para producción.** Para publicar el proyecto como producto real, el siguiente paso es mover autenticación y autorización a un backend o proveedor de identidad y proteger las rutas administrativas.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎨 Criterio de diseño
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+La actualización prioriza comportamiento y consistencia antes que copiar una estética específica: controles que responden al toque, movimiento con tiempos cortos, colores con significado estable, superficies legibles y layouts que se adaptan sin saltos entre desktop y móvil.
