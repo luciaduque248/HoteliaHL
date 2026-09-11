@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 import { fileToDataUrl, updateRoom } from '../utils/demoHotelia';
@@ -29,7 +29,7 @@ function EditModal({ habitacion, close }) {
     }));
     const [saving, setSaving] = useState(false);
 
-    const handleClose = () => close(false);
+    const handleClose = useCallback(() => close(false), [close]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -44,7 +44,7 @@ function EditModal({ habitacion, close }) {
             document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = previousOverflow;
         };
-    }, []);
+    }, [handleClose]);
 
     const handleValues = ({ target }) => {
         if (target.type === 'file') {
