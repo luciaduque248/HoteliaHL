@@ -20,14 +20,19 @@ function ExpSlide() {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 320,
+        speed: 420,
         cssEase: 'cubic-bezier(0.22, 1, 0.36, 1)',
         slidesToShow: 1,
         slidesToScroll: 1,
         swipeToSlide: true,
         draggable: true,
         arrows: false,
-        autoplay: false,
+        autoplay: true,
+        autoplaySpeed: 8000,
+        pauseOnHover: true,
+        pauseOnFocus: true,
+        pauseOnDotsHover: true,
+        waitForAnimate: false,
         adaptiveHeight: true,
     };
 
