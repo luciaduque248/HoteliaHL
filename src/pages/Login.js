@@ -6,6 +6,16 @@ import Swal from 'sweetalert2';
 import Logo from '../assets/img/logo-login.png';
 import '../assets/css/Login.css';
 
+const ADMIN_DEMO = {
+    email: 'admin@hotelia.com',
+    password: 'adminhl12',
+};
+
+const USER_DEMO = {
+    email: 'usuario@hotela.com',
+    password: 'hoteliaUser',
+};
+
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -29,16 +39,18 @@ const Login = () => {
     };
 
     const handleLogin = async (values, { setSubmitting }) => {
-        const isAdmin = values.email === 'admin@hotelia.com' && values.contraseña === 'adminhl12';
-        const isGuest = values.email === 'jfajardo@hotelia.com' && values.contraseña === 'userhl12';
+        const isAdmin = values.email === ADMIN_DEMO.email && values.contraseña === ADMIN_DEMO.password;
+        const isGuest = values.email === USER_DEMO.email && values.contraseña === USER_DEMO.password;
 
         if (isAdmin) {
-            navigate('/list-habitaciones');
+            window.sessionStorage.setItem('hotelia-demo-role', 'admin');
+            navigate('/perfil');
             return;
         }
 
         if (isGuest) {
-            navigate('/');
+            window.sessionStorage.setItem('hotelia-demo-role', 'user');
+            navigate('/mi-cuenta');
             return;
         }
 
@@ -68,7 +80,7 @@ const Login = () => {
                 <div className='login-heading'>
                     <span>Bienvenido de nuevo</span>
                     <h1 id='login-title'>Inicia sesión</h1>
-                    <p>Accede para continuar con tu reserva o administrar Hotelia.</p>
+                    <p>Accede para consultar tus reservaciones o administrar Hotelia.</p>
                 </div>
 
                 <Formik
@@ -106,7 +118,7 @@ const Login = () => {
                                         <button
                                             type='button'
                                             className='demo-access-button demo-access-button--admin'
-                                            onClick={() => fillDemoCredentials('admin@hotelia.com', 'adminhl12')}
+                                            onClick={() => fillDemoCredentials(ADMIN_DEMO.email, ADMIN_DEMO.password)}
                                         >
                                             <span className='demo-access-icon' aria-hidden='true'>
                                                 <i className='fa-solid fa-user-shield'></i>
@@ -120,14 +132,14 @@ const Login = () => {
                                         <button
                                             type='button'
                                             className='demo-access-button'
-                                            onClick={() => fillDemoCredentials('jfajardo@hotelia.com', 'userhl12')}
+                                            onClick={() => fillDemoCredentials(USER_DEMO.email, USER_DEMO.password)}
                                         >
                                             <span className='demo-access-icon' aria-hidden='true'>
                                                 <i className='fa-solid fa-user'></i>
                                             </span>
                                             <span className='demo-access-copy'>
                                                 <strong>Entrar como usuario demo</strong>
-                                                <small>Experiencia pública de Hotelia</small>
+                                                <small>Reservaciones e información personal</small>
                                             </span>
                                         </button>
                                     </div>
