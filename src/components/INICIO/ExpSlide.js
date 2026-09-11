@@ -1,57 +1,49 @@
-import React, { Component } from "react";
-import Slider from "react-slick";
+import React from 'react';
+import Slider from 'react-slick';
 
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
+const testimonials = [
+    {
+        quote: 'Un hotel excelente por el buen servicio y la ubicación. Nuestra estancia fue muy confortable y nos sentimos muy bien atendidos.',
+        author: 'Huésped Hotelia',
+    },
+    {
+        quote: 'Habitaciones amplias y cómodas. El personal fue amable y atento durante toda la estadía, y la ubicación resultó muy práctica.',
+        author: 'Huésped Hotelia',
+    },
+    {
+        quote: 'Una experiencia de mucha calidad, con buena atención y habitaciones cómodas. Volveríamos a elegir Hotelia para una próxima visita.',
+        author: 'Huésped Hotelia',
+    },
+];
+
+function ExpSlide() {
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 320,
+        cssEase: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        swipeToSlide: true,
+        draggable: true,
+        arrows: false,
+        autoplay: false,
+        adaptiveHeight: true,
+    };
+
     return (
-        <div
-            className={className}
-            style={{ ...style, display: "none", background: "#157A8A", borderRadius: "35px", height: "20px", width: "35px", paddingTop: "0.6rem", padding: "0.2rem" }}
-            onClick={onClick}
-        />
+        <div className='slide-expe' aria-label='Opiniones de huéspedes'>
+            <Slider {...settings}>
+                {testimonials.map((testimonial, index) => (
+                    <blockquote className='testimonial' key={`${testimonial.author}-${index}`}>
+                        <span className='testimonial-mark' aria-hidden='true'>“</span>
+                        <p>{testimonial.quote}</p>
+                        <footer>{testimonial.author}</footer>
+                    </blockquote>
+                ))}
+            </Slider>
+        </div>
     );
 }
 
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "none", background: "#157A8A", borderRadius: "35px", height: "20px", width: "35px", paddingTop: "0.6rem", padding: "0.2rem" }}
-            onClick={onClick}
-        />
-    );
-}
-
-export default class SimpleSlider extends Component {
-    render() {
-        const settings = {
-            dots: true,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />,
-        };
-        return (
-            <div className="slide-expe">
-                <Slider {...settings}>
-                    <div>
-                        <p>Un hotel excelente por el buen servicio con una buena ubicación, un buffet magnífico. Nuestra estancia ha sido muy confortable y nos hemos sentido excelentemente tratados. Volveremos y lo recomendaremos. Muchas gracias por todo…</p>
-                    </div>
-                    <div>
-                        <p>Habitaciones amplísimas y muy muy cómodas. Se respeta el protocolo de bioseguridad y el personal es muy amable y proactivo.
-                            Muy bien ubicado. <br/>El personal de servicio es muy atento y amable. El desayuno se incluye en el precio y es buenísimo. La ubicación es perfecta.</p>
-                    </div>
-                    <div>
-                        <p>Acabamos de llegar al hotel desde republica Dominicana y es un hotel excelente, de mucha calidad, buen servicio. Una terraza en su 5to. Piso bellísima y sobre todo tiene buen precio.
-                        La atención de todo el personal es excelente. Las habitaciones como era de esperar, grandes y cómodas.
-                        </p>
-                    </div>
-                </Slider>
-            </div>
-        );
-    }
-}
+export default ExpSlide;
