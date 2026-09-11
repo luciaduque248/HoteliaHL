@@ -1,0 +1,28 @@
+.ubicacion {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 28px;
+    background: #e8eeee;
+    box-shadow: 0 20px 48px rgba(29, 35, 38, 0.12);
+}
+
+.ubicacion img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+    box-shadow: none;
+    transform: scale(1.06);
+}
+
+@media (max-width: 680px) {
+    .ubicacion {
+        aspect-ratio: 1 / 1;
+        border-radius: 22px;
+    }
+
+    .ubicacion img {
+        transform: scale(1.09);
+    }
+}
