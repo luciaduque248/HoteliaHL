@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 import '../assets/css/ListHabs.css';
+import '../assets/css/AdminDemoPolish.css';
 import EditModal from './EditModal';
 import AdminNavBar from '../components/Dashboards/Admin_NavBar';
 import {
@@ -32,7 +33,7 @@ function ListHabs() {
     const refreshRooms = () => setHabitaciones(getRooms());
 
     useEffect(() => {
-        if (!modal) refreshRooms();
+        if (!modal) setHabitaciones(getRooms());
     }, [modal]);
 
     const habitacionesFiltradas = useMemo(() => {
