@@ -137,7 +137,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(320px, 0.58fr);
     gap: 48px;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .guest-eyebrow {
@@ -285,7 +285,7 @@
 .guest-section__heading {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
     gap: 24px;
     margin-bottom: 24px;
 }
@@ -596,8 +596,7 @@
     }
 
     .reservation-card__price button {
-        margin: 0 0 0 auto;
-        margin-right: 24px;
+        margin: 0 24px 0 auto;
     }
 }
 
