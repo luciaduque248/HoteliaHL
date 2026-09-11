@@ -1,55 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 
-import { api } from '../../utils/peticiones';
-import HotelImage from '../../assets/img/hotel-1.png';
-import Descubre1 from '../../assets/img/descubreHL1.png';
-import Descubre2 from '../../assets/img/descubreHL2.png';
+import { formatCOP, getRoomImage, getRooms } from '../../utils/demoHotelia';
 import '../../assets/css/CardSlide.css';
-
-const fallbackRooms = [
-    {
-        _id: 'fallback-1',
-        nombrehab: 'Habitación Deluxe',
-        descripcion: 'Un espacio cómodo para descansar después de recorrer Bogotá, con los servicios esenciales para una estadía tranquila.',
-        valornoche: '180.000',
-        camas: 1,
-        cajafuerte: 'Sí',
-        tv: 'Sí',
-        wifi: 'Sí',
-        nevera: 'Sí',
-        banio: 'Privado',
-        localImage: HotelImage,
-    },
-    {
-        _id: 'fallback-2',
-        nombrehab: 'Habitación Doble',
-        descripcion: 'Pensada para viajes en pareja o con compañía, con distribución amplia y una experiencia práctica y acogedora.',
-        valornoche: '220.000',
-        camas: 2,
-        cajafuerte: 'Sí',
-        tv: 'Sí',
-        wifi: 'Sí',
-        nevera: 'Sí',
-        banio: 'Privado',
-        localImage: Descubre1,
-    },
-    {
-        _id: 'fallback-3',
-        nombrehab: 'Suite Hotelia',
-        descripcion: 'Más espacio para estancias largas o viajes de trabajo, con una zona de descanso cómoda y servicios completos.',
-        valornoche: '290.000',
-        camas: 1,
-        cajafuerte: 'Sí',
-        tv: 'Sí',
-        wifi: 'Sí',
-        nevera: 'Sí',
-        banio: 'Privado',
-        localImage: Descubre2,
-    },
-];
 
 function CarouselArrow({ className, onClick, direction }) {
     return (
@@ -65,43 +19,12 @@ function CarouselArrow({ className, onClick, direction }) {
 }
 
 function normalizeValue(value, yesLabel = 'Disponible') {
-    if (value === true || value === 'si' || value === 'sí' || value === 'Si' || value === 'Sí') return yesLabel;
-    if (!value || value === 'no' || value === 'No') return 'No disponible';
-    return value;
+    if (value === true || ['si', 'sí', 'true'].includes(String(value).toLowerCase())) return yesLabel;
+    return 'No disponible';
 }
 
 function CardSlide() {
-    const [habitaciones, setHabitaciones] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [usingFallback, setUsingFallback] = useState(false);
-
-    useEffect(() => {
-        let active = true;
-
-        axios.get(api, { timeout: 7000 })
-            .then((response) => {
-                if (!active) return;
-                const rooms = Array.isArray(response.data) ? response.data : [];
-                if (rooms.length > 0) {
-                    setHabitaciones(rooms);
-                } else {
-                    setHabitaciones(fallbackRooms);
-                    setUsingFallback(true);
-                }
-            })
-            .catch(() => {
-                if (!active) return;
-                setHabitaciones(fallbackRooms);
-                setUsingFallback(true);
-            })
-            .finally(() => {
-                if (active) setLoading(false);
-            });
-
-        return () => {
-            active = false;
-        };
-    }, []);
+    const habitaciones = getRooms().filter((room) => String(room.estado).toLowerCase() === 'disponible');
 
     const settings = useMemo(() => ({
         dots: true,
@@ -127,35 +50,17 @@ function CardSlide() {
         ],
     }), [habitaciones.length]);
 
-    if (loading) {
-        return (
-            <div className='rooms-loading' aria-live='polite'>
-                <div className='room-skeleton'></div>
-                <div className='room-skeleton'></div>
-                <div className='room-skeleton'></div>
-            </div>
-        );
-    }
-
     return (
         <div className='rooms-carousel'>
-            {usingFallback && (
-                <p className='rooms-status' role='status'>
-                    Mostrando habitaciones de referencia mientras se restablece la disponibilidad en línea.
-                </p>
-            )}
-
             <Slider {...settings}>
                 {habitaciones.map((habitacion, index) => {
-                    const imageSrc = habitacion.localImage || (habitacion.img ? `https://hoteliakuepa.herokuapp.com${habitacion.img}` : HotelImage);
                     const roomName = habitacion.nombrehab || `Habitación ${index + 1}`;
-                    const price = habitacion.valornoche || 'Consultar';
 
                     return (
                         <article className='room-slide' key={habitacion._id || `${roomName}-${index}`}>
                             <div className='room-card'>
                                 <div className='room-media'>
-                                    <img src={imageSrc} className='habs-cards' alt={`${roomName} en Hotelia`} />
+                                    <img src={getRoomImage(habitacion)} className='habs-cards' alt={`${roomName} en Hotelia`} />
                                     <span className='room-badge'>Hotelia</span>
                                 </div>
 
@@ -166,7 +71,7 @@ function CardSlide() {
                                             <h3>{roomName}</h3>
                                         </div>
                                         <p className='room-price'>
-                                            <strong>{price}</strong>
+                                            <strong>{formatCOP(habitacion.valornoche)}</strong>
                                             <span>COP / noche</span>
                                         </p>
                                     </div>
