@@ -1,10 +1,10 @@
 # HoteliaHL
 
-HoteliaHL es una aplicación web de hotelería construida con React. Incluye una experiencia pública para descubrir el hotel y sus habitaciones, un flujo de inicio de sesión y vistas administrativas para gestionar habitaciones.
+HoteliaHL es una aplicación web de hotelería construida con React. Incluye una experiencia pública para descubrir el hotel y sus habitaciones, un flujo de inicio de sesión, una cuenta de huésped demo y un panel administrativo para gestionar habitaciones.
 
 ## ✨ Actualización de experiencia
 
-La interfaz fue revisada sobre el proyecto existente —sin reconstruirlo desde cero— aplicando criterios de interacción inspirados en `apple-design` y las skills de revisión de animación descritas en la guía de diseño utilizada para este proyecto.
+La interfaz fue revisada sobre el proyecto existente —sin reconstruirlo desde cero— aplicando criterios de interacción inspirados en `apple-design` y una revisión completa de consistencia visual, movimiento, accesibilidad y responsive.
 
 Principales mejoras:
 
@@ -13,21 +13,36 @@ Principales mejoras:
 - animaciones cortas, reversibles y respetuosas de `prefers-reduced-motion`;
 - carruseles utilizables con mouse, touch y swipe;
 - tarjetas de habitaciones sin dependencia de `hover` para revelar información;
-- estados de carga y fallback visual si el API histórico no responde;
 - formulario de búsqueda adaptado a móvil;
-- login con validación sin efectos secundarios, botón para mostrar contraseña y estados de error accesibles;
+- mapa interactivo embebido en la Home;
+- login con accesos demo para administrador y huésped;
+- panel de huésped con reservaciones e información personal;
+- dashboard administrativo y CRUD de habitaciones con el mismo sistema visual de la Home;
 - estilos globales con tokens para color, radio, sombra, tipografía y movimiento;
 - mejoras de semántica, foco visible y etiquetas ARIA.
+
+## 🛏️ CRUD demo autosuficiente
+
+El antiguo API de Hotelia ya no es necesario para la demostración del portafolio. El inventario de habitaciones funciona localmente en el navegador:
+
+- crear habitaciones;
+- editar habitaciones;
+- eliminar habitaciones;
+- restaurar los datos originales de la demo;
+- conservar cambios mediante `localStorage` cuando está disponible;
+- continuar funcionando con respaldo en memoria si el almacenamiento del navegador falla.
+
+La Home y el panel administrativo consumen la misma fuente de datos demo, evitando que una caída de un servicio externo deje el proyecto inutilizable.
 
 ## 🧰 Stack
 
 - React 18
 - React Router 6
-- Axios
 - Formik
 - React Slick
 - SweetAlert2
 - CSS responsive
+- localStorage para la persistencia de la demo
 
 ## 🚀 Scripts
 
@@ -49,16 +64,16 @@ src/
 ├── Admin/              # CRUD y vistas administrativas
 ├── assets/             # CSS e imágenes
 ├── components/         # Header, footer, home y dashboards
-├── pages/              # Inicio y login
+├── pages/              # Inicio, login y cuenta de huésped
 ├── routes/             # Rutas de la aplicación
-└── utils/              # Configuración del API
+└── utils/              # Datos y persistencia de la demo
 ```
 
 ## ⚠️ Estado del proyecto
 
-Este repositorio nació como un proyecto académico y conserva una integración con un API histórico alojado en Heroku. La home incluye contenido de respaldo para que la experiencia visual no quede vacía si ese servicio no está disponible.
+Este repositorio nació como un proyecto académico y actualmente está preparado como demostración funcional para portafolio. El CRUD se ejecuta del lado del cliente y sus datos no representan información real de un hotel.
 
-El inicio de sesión actual sigue siendo un mecanismo de demostración implementado en frontend. **No debe considerarse autenticación segura para producción.** Para publicar el proyecto como producto real, el siguiente paso es mover autenticación y autorización a un backend o proveedor de identidad y proteger las rutas administrativas.
+El inicio de sesión es igualmente un mecanismo de demostración implementado en frontend. **No debe considerarse autenticación segura para producción.** Para convertir Hotelia en un producto real, autenticación, autorización, reservaciones e inventario deberían moverse a un backend y una base de datos persistente.
 
 ## 🎨 Criterio de diseño
 
