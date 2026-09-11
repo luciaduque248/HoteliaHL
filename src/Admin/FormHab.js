@@ -1,349 +1,286 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
-import '../assets/css/FormHab.css'
-import Footer from '../components/Footer/Footer'
-import Nevera from '../assets/img/iconos/nevera.png'
+import '../assets/css/FormHab.css';
 import AdminNavBar from '../components/Dashboards/Admin_NavBar';
-// import Admin_NavBar from '../components/Dashboards/Admin_NavBar'
+import { api } from '../utils/peticiones';
 
-const FormHab = () => {
-    /*1.Inicializamos los inputs en el estado, para poder recibir los valores que se digiten 
-    en él y controlarlos */
-    const [data, setData] = useState({
-        id: "",
-        _id: "",
-        nombrehab: "",
-        capacidad: "",
-        valornoche: "",
-        camas: "",
-        descripcion: "",
-        img: "",
-        cajafuerte: false,
-        tv: false,
-        wifi: false,
-        nevera: false,
-        banio: false,
-        estado:""
-    })
-    /*2. Se usa la función handleChange para que cada vez que haya un cambio en el input
-    guarde el name y el value del mismo */
+const initialRoom = {
+    _id: '',
+    nombrehab: '',
+    capacidad: '',
+    valornoche: '',
+    camas: '',
+    descripcion: '',
+    img: null,
+    cajafuerte: 'no',
+    tv: 'no',
+    wifi: 'no',
+    nevera: 'no',
+    banio: 'no',
+    estado: 'Disponible',
+};
 
+const amenityOptions = [
+    { name: 'wifi', label: 'Wi-Fi', icon: 'fa-wifi' },
+    { name: 'tv', label: 'Televisión', icon: 'fa-tv' },
+    { name: 'nevera', label: 'Nevera', icon: 'fa-snowflake' },
+    { name: 'cajafuerte', label: 'Caja fuerte', icon: 'fa-vault' },
+    { name: 'banio', label: 'Baño privado', icon: 'fa-bath' },
+];
 
+function FormHab() {
+    const [data, setData] = useState(initialRoom);
+    const [submitting, setSubmitting] = useState(false);
+    const [fileKey, setFileKey] = useState(0);
 
     const handleChange = ({ target }) => {
-        // console.log(target.value)
-        
-        //Cada vez que haya un cambio se va a guardar el valor en el estado data
-        setData({
-            
-            ...data,
-            // [target.name]: target.value
-            [target.name]: target.name === 'img'?target.files[0]:target.value
-        })
-    }
+        const value = target.type === 'file' ? target.files?.[0] || null : target.value;
+        setData((current) => ({ ...current, [target.name]: value }));
+    };
 
-    /*4. Crear petición asíncrona*/
-    const url = "https://hoteliakuepa.herokuapp.com/habitaciones";
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    /*3. funcion para procesar el envío del formulario*/
-    const handleSubmit = async (e) => {
-        // let data = new FormData();
-        // data.append('_id', data._id)
-        // data.append('nombrehab', data.nombrehab)
-        // data.append('capacidad', data.capacidad)
-        // data.append('camas', data.camas)
-        // data.append('descripcion', data.descripcion)
-        // data.append('wifi', data.wifi)
-        // data.append('tv', data.tv)    
-        // data.append('banio', data.banio)
-        // data.append('cajafuerte', data.cajafuerte)
-        // data.append('nevera', data.nevera)
-        // data.append('valornoche', data.valornoche)
-        // data.append('estado', data.estado)
-        // data.append('img', data.img)
-        // data.append('__v', data.__v)
-        // data.append('reservas', data.reservas)
-        
-        let config = {
-            header : {
-              'Content-Type' : 'multipart/form-data'
+        const payload = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== null && value !== undefined) payload.append(key, value);
+        });
+
+        try {
+            setSubmitting(true);
+            const response = await axios.post(api.replace(/\/$/, ''), payload, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+
+            if (response.status >= 200 && response.status < 300) {
+                await Swal.fire({
+                    title: 'Habitación creada',
+                    text: `${data.nombrehab || 'La habitación'} fue registrada correctamente.`,
+                    icon: 'success',
+                    confirmButtonColor: '#0f6f79',
+                });
+                setData(initialRoom);
+                setFileKey((current) => current + 1);
             }
-          }
-
-        e.preventDefault();
-        const response = await axios.post(url, data, config);//await espera hasta que se ejcute la petición
-        // console.log(response);
-        if (response.status === 200) {
-            Swal.fire(
-                'Guardado!',
-                `La habitación <strong> ${response.nombrehab}</strong> ha sido registrada exitosamente!`,
-                'success'
-            )
-
-        } else {
-            Swal.fire(
-                'Error!',
-                'Hubo un problema al registrar la habitación!',
-                'error'
-            )
+        } catch (error) {
+            await Swal.fire({
+                title: 'No se pudo crear la habitación',
+                text: 'El API no completó la solicitud. Revisa la conexión e inténtalo nuevamente.',
+                icon: 'error',
+                confirmButtonColor: '#0f6f79',
+            });
+        } finally {
+            setSubmitting(false);
         }
-    }
-    
+    };
+
     return (
-        <div>
-            <AdminNavBar/>
+        <div className='admin-page'>
+            <AdminNavBar />
 
-            <div className='container-form-habs'>
-                <h1>CREAR HABITACIÓN</h1>
-
-                <form id='formulario' onSubmit={handleSubmit}>
-
-                    <div className='line1-habitacion'>
-                        <div className='flex-form' id='grupo__nohab'>
-                            <label className='formulario__label'>No. de Hab</label>
-                            
-                            <input
-                                
-                                className='no-hab' 
-                                placeholder="Ingrese el número de la habitación"
-                                type='number' 
-                                name='_id' 
-                                value={data._id}
-                                onChange={handleChange}
-                                />
-
-                        </div>
-
-                        <div className='flex-form nombrehab'>
-                            <label className='formulario__label'>Nombre de Habitación</label>
-                            <input 
-                                 
-                                placeholder="Ej: President's Suite"
-                                className='no-hab' 
-                                type='text' 
-                                name='nombrehab'
-                                value={data.nombrehab}
-                                onChange={handleChange} 
-                                />
-
-                        </div>
+            <main className='room-form-page'>
+                <header className='room-form-page__header'>
+                    <div>
+                        <span className='admin-eyebrow'>Alta de habitación</span>
+                        <h1>Nueva habitación</h1>
+                        <p>Completa la información principal, el estado y los servicios antes de agregarla al inventario.</p>
                     </div>
+                    <Link to='/list-habitaciones' className='room-form-page__back'>
+                        <i className='fa-solid fa-arrow-left' aria-hidden='true'></i>
+                        Volver al inventario
+                    </Link>
+                </header>
 
-                    <div className='line2-habitacion'>
-                        <div className='select-estado-form flex-form'>
-                            <label className='formulario__label estado-label'>Estado</label>
-                            <select name="estado" className='estado-form' onChange={handleChange}>
-                                <option value={data.estado} className='estado-form-yes'>DISPONIBLE</option>
-                                <option value={data.estado} className='estado-form-no'selected>NO DISPONIBLE</option>
-                                <option value={data.estado} className='estado-form-upkeep'>EN MANTENIMIENTO</option>
-                            </select>
+                <form className='room-form' onSubmit={handleSubmit}>
+                    <section className='room-form__panel'>
+                        <div className='room-form__section-heading'>
+                            <span className='room-form__section-icon'><i className='fa-solid fa-circle-info' aria-hidden='true'></i></span>
+                            <div>
+                                <h2>Información general</h2>
+                                <p>Datos con los que se identificará la habitación.</p>
+                            </div>
                         </div>
-                        <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>Capacidad de Personas</label>
-                            <input  
-                                
-                                type='number' 
-                                name='capacidad' 
-                                value={data.capacidad}
-                                onChange={handleChange} 
+
+                        <div className='room-form__grid room-form__grid--two'>
+                            <label className='room-field'>
+                                <span>Número de habitación</span>
+                                <input
+                                    required
+                                    min='1'
+                                    type='number'
+                                    name='_id'
+                                    value={data._id}
+                                    onChange={handleChange}
+                                    placeholder='Ej. 204'
                                 />
-                        </div>
-                        <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>Precio</label>
-                            <input  
-                                
-                                placeholder="Ej: 000000"
-                                className='precio-form' 
-                                type='number' 
-                                name='valornoche' 
-                                value={data.valornoche}
-                                onChange={handleChange} 
+                            </label>
+
+                            <label className='room-field'>
+                                <span>Nombre de habitación</span>
+                                <input
+                                    required
+                                    type='text'
+                                    name='nombrehab'
+                                    value={data.nombrehab}
+                                    onChange={handleChange}
+                                    placeholder='Ej. Suite Hotelia'
                                 />
-                        </div>
-                        <div className='flex-form flex-form-line2'>
-                            <label className='formulario__label'>No. de Camas</label>
-                            <input  
-                                
-                                className='camas-input-form'
-                                type='number' 
-                                name='camas'
-                                value={data.camas}
-                                onChange={handleChange} 
-                                />
+                            </label>
                         </div>
 
-                    </div>
+                        <div className='room-form__grid room-form__grid--four'>
+                            <label className='room-field'>
+                                <span>Estado</span>
+                                <select name='estado' value={data.estado} onChange={handleChange}>
+                                    <option value='Disponible'>Disponible</option>
+                                    <option value='No disponible'>No disponible</option>
+                                    <option value='En mantenimiento'>En mantenimiento</option>
+                                </select>
+                            </label>
 
-                    <div className='line3-habitacion'>
-                        <div className='flex-form'>
-                            <label className='formulario__label'>Descripción</label>
-                            <textarea
-                                
-                                value={data.descripcion}
-                                onChange={handleChange} 
-                                placeholder="Ingrese la descripción de la habitación" 
-                                id="story" 
-                                rows="5" 
-                                cols="33" 
-                                className='textarea' 
-                                name='descripcion' />
-                        </div>
-
-                    </div>
-
-                    <div className='flex-fotos-observ'>
-                        <div className='line4-habitacion'>
-                            <div className='flex-form2  file-select-form'>
-                                <label>Fotos</label>
-                                <div className='flex-select-form'>
+                            <label className='room-field'>
+                                <span>Capacidad</span>
+                                <div className='room-field__with-icon'>
+                                    <i className='fa-solid fa-users' aria-hidden='true'></i>
                                     <input
-                                        name='img'
-                                        
+                                        required
+                                        min='1'
+                                        type='number'
+                                        name='capacidad'
+                                        value={data.capacidad}
                                         onChange={handleChange}
-                                        className='fotos-edit-form'
-                                        type='file' />
+                                        placeholder='2'
+                                    />
                                 </div>
+                            </label>
+
+                            <label className='room-field'>
+                                <span>Precio por noche</span>
+                                <div className='room-field__with-icon'>
+                                    <span className='room-field__currency'>$</span>
+                                    <input
+                                        required
+                                        min='0'
+                                        type='number'
+                                        name='valornoche'
+                                        value={data.valornoche}
+                                        onChange={handleChange}
+                                        placeholder='220000'
+                                    />
+                                </div>
+                            </label>
+
+                            <label className='room-field'>
+                                <span>Número de camas</span>
+                                <div className='room-field__with-icon'>
+                                    <i className='fa-solid fa-bed' aria-hidden='true'></i>
+                                    <input
+                                        required
+                                        min='1'
+                                        type='number'
+                                        name='camas'
+                                        value={data.camas}
+                                        onChange={handleChange}
+                                        placeholder='1'
+                                    />
+                                </div>
+                            </label>
+                        </div>
+
+                        <label className='room-field'>
+                            <span>Descripción</span>
+                            <textarea
+                                required
+                                rows='5'
+                                name='descripcion'
+                                value={data.descripcion}
+                                onChange={handleChange}
+                                placeholder='Describe el espacio, la experiencia y los aspectos que diferencian esta habitación.'
+                            />
+                            <small>{data.descripcion.length} caracteres</small>
+                        </label>
+                    </section>
+
+                    <section className='room-form__panel'>
+                        <div className='room-form__section-heading'>
+                            <span className='room-form__section-icon'><i className='fa-solid fa-image' aria-hidden='true'></i></span>
+                            <div>
+                                <h2>Fotografía</h2>
+                                <p>Selecciona la imagen principal que se mostrará a los huéspedes.</p>
                             </div>
                         </div>
 
-                        <div className='line5-habitacion'>
-                            <div className='flex-form2'>
-                                <h3>Observaciones adicionales</h3>
+                        <label className='room-file-field'>
+                            <span className='room-file-field__icon'><i className='fa-solid fa-cloud-arrow-up' aria-hidden='true'></i></span>
+                            <span className='room-file-field__copy'>
+                                <strong>{data.img ? data.img.name : 'Seleccionar fotografía'}</strong>
+                                <small>El archivo se enviará al servicio actual de Hotelia.</small>
+                            </span>
+                            <span className='room-file-field__button'>Elegir archivo</span>
+                            <input key={fileKey} type='file' name='img' accept='image/*' onChange={handleChange} />
+                        </label>
+                    </section>
 
-                                <div className='flex-si-no'>
-                                    <div className='lines-form'>
-
-                                        <div className='observ-form'>
-                                            <div className='cajafuerte'>
-                                                <i className="fa-solid fa-vault"></i>
-                                                <p>Caja fuerte</p>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name="cajafuerte"
-                                                    onChange={handleChange}
-                                                    value={"Si"}
-                                                />
-                                                <label className='formulario__label'>Si</label>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name="cajafuerte"
-                                                    onChange={handleChange}
-                                                    value={"No"}
-                                                />
-                                                <label className='formulario__label'>No</label>
-                                            </div>
-                                        </div>
-
-                                        <div className='observ-form'>
-                                            <p className='wifi'><i className="fa-solid fa-wifi"></i>WI-FI</p>
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='wifi'
-                                                    onChange={handleChange}
-                                                    value={"Si"} />
-                                                <label className='formulario__label'>Si</label>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='wifi'
-                                                    onChange={handleChange}
-                                                    value={"No"} />
-                                                <label className='formulario__label'>No</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='lines-form'>
-                                        <div className='observ-form'>
-                                            <img src={Nevera} alt='nevera' className='nevera' />
-                                            <p>Nevera</p>
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='nevera'
-                                                    onChange={handleChange}
-                                                    value={"Si"} />
-                                                <label className='formulario__label'>Si</label>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='nevera'
-                                                    onChange={handleChange}
-                                                    value={"No"} />
-                                                <label className='formulario__label'>No</label>
-                                            </div>
-                                        </div>
-
-                                        <div className='observ-form'>
-                                            <p><i className="fa-solid fa-tv"></i>TV</p>
-                                            <div className='selectors-radio'>
-                                                <input type="radio"
-                                                    name='tv'
-                                                    onChange={handleChange}
-                                                    value={"Si"} />
-                                                <label className='formulario__label'>Si</label>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input type="radio"
-                                                    name='tv'
-                                                    onChange={handleChange}
-                                                    value={"No"} />
-                                                <label className='formulario__label'>No</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='lines-form'>
-                                        <div className='observ-form'>
-                                            <p><i className="fa-solid fa-bath"></i>Baño</p>
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='banio'
-                                                    onChange={handleChange}
-                                                    value={"Si"} />
-                                                <label className='formulario__label'>Si</label>
-                                            </div>
-
-                                            <div className='selectors-radio'>
-                                                <input
-                                                    type="radio"
-                                                    name='banio'
-                                                    onChange={handleChange}
-                                                    value={"No"} />
-                                                <label className='formulario__label'>No</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                    <section className='room-form__panel'>
+                        <div className='room-form__section-heading'>
+                            <span className='room-form__section-icon'><i className='fa-solid fa-sparkles' aria-hidden='true'></i></span>
+                            <div>
+                                <h2>Servicios incluidos</h2>
+                                <p>Indica qué comodidades están disponibles en esta habitación.</p>
                             </div>
                         </div>
-                    </div>
 
-                    <div className='btn-form-hab'>
-                        <button className='crear-form' type='submit'>CREAR HABITACIÓN</button>
+                        <div className='amenity-grid'>
+                            {amenityOptions.map((amenity) => (
+                                <fieldset className='amenity-control' key={amenity.name}>
+                                    <legend>
+                                        <i className={`fa-solid ${amenity.icon}`} aria-hidden='true'></i>
+                                        {amenity.label}
+                                    </legend>
+                                    <div className='amenity-control__options'>
+                                        <label className={data[amenity.name] === 'si' ? 'is-selected' : ''}>
+                                            <input
+                                                type='radio'
+                                                name={amenity.name}
+                                                value='si'
+                                                checked={data[amenity.name] === 'si'}
+                                                onChange={handleChange}
+                                            />
+                                            Sí
+                                        </label>
+                                        <label className={data[amenity.name] === 'no' ? 'is-selected' : ''}>
+                                            <input
+                                                type='radio'
+                                                name={amenity.name}
+                                                value='no'
+                                                checked={data[amenity.name] === 'no'}
+                                                onChange={handleChange}
+                                            />
+                                            No
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className='room-form__footer'>
+                        <div>
+                            <strong>Revisa los datos antes de guardar.</strong>
+                            <span>Podrás editar la habitación posteriormente desde el inventario.</span>
+                        </div>
+                        <button type='submit' disabled={submitting}>
+                            {submitting ? <i className='fa-solid fa-circle-notch fa-spin' aria-hidden='true'></i> : <i className='fa-solid fa-plus' aria-hidden='true'></i>}
+                            {submitting ? 'Creando…' : 'Crear habitación'}
+                        </button>
                     </div>
                 </form>
-            </div>
-
-            <Footer />
+            </main>
         </div>
-    )
+    );
 }
 
-export default FormHab
+export default FormHab;
