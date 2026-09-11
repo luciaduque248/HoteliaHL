@@ -4,6 +4,7 @@ import Descubre2 from '../assets/img/descubreHL2.png';
 import Descubre3 from '../assets/img/descubreHL3.png';
 
 const ROOMS_KEY = 'hotelia-demo-rooms-v1';
+const MAX_DEMO_IMAGE_BYTES = 700 * 1024;
 
 const roomImages = {
     hotel: HotelImage,
@@ -109,31 +110,58 @@ export const demoReservations = [
     },
 ];
 
-const cloneDefaults = () => defaultRooms.map((room) => ({ ...room }));
+const cloneRooms = (rooms) => rooms.map((room) => ({ ...room }));
+const cloneDefaults = () => cloneRooms(defaultRooms);
+let memoryRooms = cloneDefaults();
 
-export const getRooms = () => {
-    if (typeof window === 'undefined') return cloneDefaults();
+const readLocalRooms = () => {
+    if (typeof window === 'undefined') return null;
 
     try {
         const stored = window.localStorage.getItem(ROOMS_KEY);
-        if (stored !== null) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed)) return parsed;
-        }
+        if (stored === null) return null;
+
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : null;
     } catch (error) {
-        console.warn('No fue posible leer el inventario demo.', error);
+        return null;
+    }
+};
+
+const persistLocalRooms = (rooms) => {
+    if (typeof window === 'undefined') return false;
+
+    try {
+        window.localStorage.setItem(ROOMS_KEY, JSON.stringify(rooms));
+        return true;
+    } catch (error) {
+        try {
+            const withoutHeavyImages = rooms.map(({ imageData, ...room }) => room);
+            window.localStorage.setItem(ROOMS_KEY, JSON.stringify(withoutHeavyImages));
+            return true;
+        } catch (fallbackError) {
+            return false;
+        }
+    }
+};
+
+export const getRooms = () => {
+    const stored = readLocalRooms();
+
+    if (stored !== null) {
+        memoryRooms = cloneRooms(stored);
+        return cloneRooms(stored);
     }
 
-    const seeded = cloneDefaults();
-    window.localStorage.setItem(ROOMS_KEY, JSON.stringify(seeded));
-    return seeded;
+    if (!memoryRooms.length) memoryRooms = cloneDefaults();
+    persistLocalRooms(memoryRooms);
+    return cloneRooms(memoryRooms);
 };
 
 const saveRooms = (rooms) => {
-    if (typeof window !== 'undefined') {
-        window.localStorage.setItem(ROOMS_KEY, JSON.stringify(rooms));
-    }
-    return rooms;
+    memoryRooms = cloneRooms(rooms);
+    persistLocalRooms(memoryRooms);
+    return cloneRooms(memoryRooms);
 };
 
 export const createRoom = (room) => {
@@ -154,7 +182,7 @@ export const createRoom = (room) => {
     };
 
     saveRooms([...rooms, nextRoom]);
-    return nextRoom;
+    return { ...nextRoom };
 };
 
 export const updateRoom = (id, changes) => {
@@ -180,8 +208,7 @@ export const updateRoom = (id, changes) => {
 export const deleteRoom = (id) => {
     const roomId = String(id);
     const rooms = getRooms().filter((room) => String(room._id) !== roomId);
-    saveRooms(rooms);
-    return rooms;
+    return saveRooms(rooms);
 };
 
 export const resetDemoRooms = () => saveRooms(cloneDefaults());
@@ -193,7 +220,7 @@ export const getRoomImage = (room) => {
 };
 
 export const fileToDataUrl = (file) => new Promise((resolve, reject) => {
-    if (!file) {
+    if (!file || file.size > MAX_DEMO_IMAGE_BYTES) {
         resolve(null);
         return;
     }
