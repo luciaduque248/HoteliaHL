@@ -1,8 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
-import { api } from '../utils/peticiones';
+import { fileToDataUrl, updateRoom } from '../utils/demoHotelia';
 import '../assets/css/Edit.css';
 
 const amenities = [
@@ -21,6 +20,7 @@ const normalizeAmenity = (value) => {
 function EditModal({ habitacion, close }) {
     const [room, setRoom] = useState(() => ({
         ...habitacion,
+        newImage: null,
         wifi: normalizeAmenity(habitacion.wifi),
         tv: normalizeAmenity(habitacion.tv),
         nevera: normalizeAmenity(habitacion.nevera),
@@ -44,40 +44,40 @@ function EditModal({ habitacion, close }) {
             document.removeEventListener('keydown', handleKeyDown);
             document.body.style.overflow = previousOverflow;
         };
-    });
+    }, []);
 
     const handleValues = ({ target }) => {
-        const value = target.type === 'file' ? target.files?.[0] || room.img : target.value;
-        setRoom((current) => ({ ...current, [target.name]: value }));
+        if (target.type === 'file') {
+            setRoom((current) => ({ ...current, newImage: target.files?.[0] || null }));
+            return;
+        }
+        setRoom((current) => ({ ...current, [target.name]: target.value }));
     };
 
     const handleEdit = async (event) => {
         event.preventDefault();
-        const payload = new FormData();
-
-        Object.entries(room).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) payload.append(key, value);
-        });
 
         try {
             setSaving(true);
-            const response = await axios.put(`${api}${habitacion._id}`, payload, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+            const imageData = room.newImage ? await fileToDataUrl(room.newImage) : room.imageData;
+            const { newImage, ...changes } = room;
+
+            updateRoom(habitacion._id, {
+                ...changes,
+                imageData,
             });
 
-            if (response.status >= 200 && response.status < 300) {
-                await Swal.fire({
-                    title: 'Cambios guardados',
-                    text: `${room.nombrehab || 'La habitación'} fue actualizada correctamente.`,
-                    icon: 'success',
-                    confirmButtonColor: '#0f6f79',
-                });
-                handleClose();
-            }
+            await Swal.fire({
+                title: 'Cambios guardados',
+                text: `${room.nombrehab || 'La habitación'} fue actualizada correctamente.`,
+                icon: 'success',
+                confirmButtonColor: '#0f6f79',
+            });
+            handleClose();
         } catch (error) {
             await Swal.fire({
                 title: 'No se pudieron guardar los cambios',
-                text: 'El API no completó la actualización. Inténtalo nuevamente.',
+                text: 'No pudimos actualizar los datos de esta demo. Inténtalo nuevamente.',
                 icon: 'error',
                 confirmButtonColor: '#0f6f79',
             });
@@ -169,8 +169,8 @@ function EditModal({ habitacion, close }) {
                             <label className='edit-file-field'>
                                 <i className='fa-solid fa-cloud-arrow-up' aria-hidden='true'></i>
                                 <div>
-                                    <strong>{room.img instanceof File ? room.img.name : 'Cambiar fotografía'}</strong>
-                                    <span>{room.img instanceof File ? 'Nueva imagen seleccionada' : 'La imagen actual se mantendrá si no eliges otra.'}</span>
+                                    <strong>{room.newImage ? room.newImage.name : 'Cambiar fotografía'}</strong>
+                                    <span>{room.newImage ? 'Nueva imagen seleccionada' : 'La imagen actual se mantendrá si no eliges otra.'}</span>
                                 </div>
                                 <b>Elegir archivo</b>
                                 <input type='file' name='img' accept='image/*' onChange={handleValues} />
@@ -195,23 +195,11 @@ function EditModal({ habitacion, close }) {
                                         </legend>
                                         <div>
                                             <label className={room[amenity.name] === 'si' ? 'is-selected' : ''}>
-                                                <input
-                                                    type='radio'
-                                                    name={amenity.name}
-                                                    value='si'
-                                                    checked={room[amenity.name] === 'si'}
-                                                    onChange={handleValues}
-                                                />
+                                                <input type='radio' name={amenity.name} value='si' checked={room[amenity.name] === 'si'} onChange={handleValues} />
                                                 Sí
                                             </label>
                                             <label className={room[amenity.name] === 'no' ? 'is-selected' : ''}>
-                                                <input
-                                                    type='radio'
-                                                    name={amenity.name}
-                                                    value='no'
-                                                    checked={room[amenity.name] === 'no'}
-                                                    onChange={handleValues}
-                                                />
+                                                <input type='radio' name={amenity.name} value='no' checked={room[amenity.name] === 'no'} onChange={handleValues} />
                                                 No
                                             </label>
                                         </div>
