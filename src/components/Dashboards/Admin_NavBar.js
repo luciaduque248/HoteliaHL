@@ -10,6 +10,10 @@ function AdminNavBar() {
 
   const navClassName = ({ isActive }) => `admin-nav__link${isActive ? ' is-active' : ''}`;
 
+  const handleLogout = () => {
+    window.sessionStorage.removeItem('hotelia-demo-role');
+  };
+
   return (
     <header className='admin-nav'>
       <div className='admin-nav__inner'>
@@ -57,7 +61,7 @@ function AdminNavBar() {
               <small>Hotelia</small>
             </span>
           </div>
-          <Link to='/login' className='admin-nav__logout'>
+          <Link to='/login' className='admin-nav__logout' onClick={handleLogout}>
             <i className='fa-solid fa-arrow-right-from-bracket' aria-hidden='true'></i>
             <span>Salir</span>
           </Link>
