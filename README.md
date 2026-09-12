@@ -78,3 +78,7 @@ El inicio de sesión es igualmente un mecanismo de demostración implementado en
 ## 🎨 Criterio de diseño
 
 La actualización prioriza comportamiento y consistencia antes que copiar una estética específica: controles que responden al toque, movimiento con tiempos cortos, colores con significado estable, superficies legibles y layouts que se adaptan sin saltos entre desktop y móvil.
+
+## 🌐 Despliegue
+
+La versión pública del portafolio se publica mediante Vercel desde la rama `main`.
